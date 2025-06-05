@@ -199,10 +199,13 @@ export class MovimientosEntradaSalidaComponent {
               const blobOut = new Blob([out], {
                 type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
               });
+               // guardar el archivo
               saveAs(
                 blobOut,
                 `Nota_Responsabilidad_${this.numMovimiento}.docx`
               );
+              //convertir a PDF
+              // this.convertToPDF(blobOut);
             })
             .catch((err) =>
               console.error('❌ Error convirtiendo Blob a ArrayBuffer:', err)
@@ -211,4 +214,26 @@ export class MovimientosEntradaSalidaComponent {
         (err) => console.error('❌ Error al descargar la plantilla:', err)
       );
   }
+  /* Funcion para exportar a PDF por medio de NodeJS
+  convertToPDF(docxBlob: Blob) {
+    const formData = new FormData();
+    formData.append(
+      'file',
+      docxBlob,
+      `Nota_Responsabilidad_${this.numMovimiento}.docx`
+    );
+
+    this.http
+      .post('http://localhost:3000/convert', formData, {
+        responseType: 'blob',
+      })
+      .subscribe(
+        (pdfBlob) => {
+          saveAs(pdfBlob, `Nota_Responsabilidad_${this.numMovimiento}.pdf`);
+        },
+        (error) => {
+          console.error('❌ Error al convertir a PDF:', error);
+        }
+      );
+  }*/
 }

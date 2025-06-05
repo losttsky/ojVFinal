@@ -244,3 +244,17 @@ table tr:hover {
     padding: 6px; /* Menos padding */
   }
 }
+
+/* Contenedor para hacer scroll horizontal en tablas */
+.tabla-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mejora la experiencia en pantallas pequeñas */
+@media (max-width: 768px) {
+  .tabla-responsive table {
+    min-width: 600px; /* ancho mínimo para que el scroll tenga sentido */
+  }
+}

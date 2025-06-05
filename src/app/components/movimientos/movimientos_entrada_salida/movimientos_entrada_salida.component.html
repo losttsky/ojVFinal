@@ -167,26 +167,26 @@
     </div>
 
     <div class="form-group">
-        <label for="marca">Modelo</label>
-        <input
-          class="input_txt"
-          type="text"
-          id="modelo"
-          [(ngModel)]="modelo"
-          placeholder="Ingresa el Modelo"
-        />
-      </div>
+      <label for="marca">Modelo</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="modelo"
+        [(ngModel)]="modelo"
+        placeholder="Ingresa el Modelo"
+      />
+    </div>
 
-      <div class="form-group">
-        <label for="marca">Serie</label>
-        <input
-          class="input_txt"
-          type="text"
-          id="serie"
-          [(ngModel)]="serie"
-          placeholder="Ingresa la Serie"
-        />
-      </div>
+    <div class="form-group">
+      <label for="marca">Serie</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="serie"
+        [(ngModel)]="serie"
+        placeholder="Ingresa la Serie"
+      />
+    </div>
 
     <!-- Observaciones -->
     <div class="form-group">
@@ -210,60 +210,63 @@
     </div>
 
     <!-- Tabla de artículos -->
-    <table>
-      <thead>
-        <tr>
-          <th>Grupo</th>
-          <th>SubGrupo</th>
-          <th>Artículo</th>
-          <th>Cantidad</th>
-          <th>Descripción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let articulo of articulos; let i = index">
-          <td>
-            <input
-              class="input_tabla"
-              type="text"
-              [(ngModel)]="articulo.grupo"
-            />
-          </td>
-          <td>
-            <input
-              class="input_tabla"
-              type="text"
-              [(ngModel)]="articulo.subgrupo"
-            />
-          </td>
-          <td>
-            <input
-              class="input_tabla"
-              type="text"
-              [(ngModel)]="articulo.articulo"
-            />
-          </td>
-          <td>
-            <input
-              class="input_tabla"
-              type="number"
-              [(ngModel)]="articulo.cantidad"
-            />
-          </td>
-          <td>
-            <input
-              class="input_tabla"
-              type="text"
-              [(ngModel)]="articulo.descripcion"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Tabla de artículos -->
+    <div class="tabla-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Grupo</th>
+            <th>SubGrupo</th>
+            <th>Artículo</th>
+            <th>Cantidad</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let articulo of articulos; let i = index">
+            <td>
+              <input
+                class="input_tabla"
+                type="text"
+                [(ngModel)]="articulo.grupo"
+              />
+            </td>
+            <td>
+              <input
+                class="input_tabla"
+                type="text"
+                [(ngModel)]="articulo.subgrupo"
+              />
+            </td>
+            <td>
+              <input
+                class="input_tabla"
+                type="text"
+                [(ngModel)]="articulo.articulo"
+              />
+            </td>
+            <td>
+              <input
+                class="input_tabla"
+                type="number"
+                [(ngModel)]="articulo.cantidad"
+              />
+            </td>
+            <td>
+              <input
+                class="input_tabla"
+                type="text"
+                [(ngModel)]="articulo.descripcion"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <!-- Botones principales -->
     <div class="acciones">
-<!--       <button (click)="agregarArticulo()">Entrega de Equipo</button> -->
+      <!--       <button (click)="agregarArticulo()">Entrega de Equipo</button> -->
       <button (click)="exportWord()">Hoja de Responsabilidad</button>
     </div>
   </div>
