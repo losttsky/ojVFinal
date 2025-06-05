@@ -1,0 +1,84 @@
+.rango-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #004186;
+  text-align: center;
+}
+
+.form-group {
+  display: inline-block;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.form-group input {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.botones {
+  margin: 15px 0;
+}
+
+.botones button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  background: #004186;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.botones button:hover {
+  background: #003366;
+}
+
+.tabla-reportes {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.tabla-reportes th,
+.tabla-reportes td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.tabla-reportes th {
+  background: #f4f4f4;
+  color: #333;
+}
+
+.tabla-reportes tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.tabla-reportes input {
+  width: 100%;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

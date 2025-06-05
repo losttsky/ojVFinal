@@ -1,0 +1,22 @@
+.default-container {
+  max-width: 900px;
+  margin: 100px auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #004186;
+  margin-bottom: 20px;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 20px;
+  width: 100px;
+}
+

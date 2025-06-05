@@ -1,0 +1,246 @@
+/* Contenedor general del formulario */
+.formulario-mov {
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  max-width: 1200px; /* Maximo ancho del formulario */
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Título principal */
+h2 {
+  text-align: center;
+  color: #004186;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Fila de campos de formulario */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+/* Estilo para cada campo de formulario */
+.form-group {
+  flex: 1;
+  min-width: 280px;
+}
+
+/* Estilo para las etiquetas de los campos */
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Estilos para los inputs y el texto */
+.input_txt,
+.input_num,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.input_date {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+  border-color: #004186;
+  outline: none;
+  background-color: #ffffff;
+}
+
+/* Estilo de los botones */
+button {
+  padding: 12px 20px;
+  background-color: #004186;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  min-width: 120px;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #003366;
+}
+
+/* Estilo para los botones deshabilitados */
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+/* Estilo para la tabla */
+table {
+  width: 100%;
+  margin-top: 30px;
+}
+
+table th,
+table td {
+  padding: 12px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+table th {
+  background-color: #004186;
+  color: white;
+  font-size: 16px;
+}
+
+.input_tabla {
+  width: auto;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+}
+
+table td {
+  font-size: 14px;
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Contenedor para los botones de acciones */
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+/* Agregar un margen adecuado a los botones */
+.acciones button {
+  margin-left: 10px;
+}
+
+/* Estilo para las notas o mensajes de advertencia */
+.responsabilidad {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.responsabilidad button {
+  background-color: #ff6f61;
+  margin-right: 10px;
+}
+
+.responsabilidad button:hover {
+  background-color: #ff4d40;
+}
+
+.responsabilidad h3 {
+  color: #004186;
+  margin-bottom: 15px;
+}
+
+/* Media Queries (responsive) */
+
+/* Pantallas pequeñas (menos de 768px) */
+@media (max-width: 768px) {
+  .formulario-mov {
+    padding: 15px; /* Menor padding */
+  }
+
+  /* Fila de campos */
+  .row {
+    gap: 15px; /* Menor espacio entre campos */
+    flex-direction: column; /* Coloca los campos en columna */
+  }
+
+  /* Los campos de formulario ocuparán todo el ancho */
+  .form-group {
+    min-width: 100%;
+  }
+
+  /* Los botones se ajustan al 100% */
+  button {
+    width: 100%; /* Los botones ocupan todo el ancho */
+    margin-top: 10px; /* Menos margen */
+  }
+
+  /* Ajuste de la tabla */
+  table {
+    width: 100%;
+  }
+
+  table th,
+  table td {
+    font-size: 12px; /* Texto más pequeño */
+    padding: 8px; /* Menos padding */
+  }
+
+  .input_tabla {
+    width: 100%; /* Los inputs de la tabla ocupan todo el ancho */
+  }
+
+  /* Responsabilidad */
+  .responsabilidad {
+    padding: 15px; /* Menos padding en las notas */
+  }
+}
+
+/* Pantallas muy pequeñas (menos de 480px) */
+@media (max-width: 480px) {
+  /* Ajustar título */
+  h2 {
+    font-size: 18px;
+  }
+
+  /* Ajustar campos */
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  .input_txt,
+  .input_num,
+  .input_date,
+  textarea {
+    font-size: 14px; /* Menor tamaño de fuente */
+    padding: 8px; /* Menos padding */
+  }
+
+  /* Ajuste de la tabla */
+  table th,
+  table td {
+    font-size: 11px; /* Fuente más pequeña */
+    padding: 6px; /* Menos padding */
+  }
+}

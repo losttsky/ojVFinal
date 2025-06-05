@@ -1,0 +1,34 @@
+<div class="group-container">
+  <!-- Campo Nombre -->
+  <div class="form-group">
+    <label for="idDependencia">Nombre: </label>
+    <input id="idDependencia" class="input_nombre" type="text" [(ngModel)]="idDependencia" placeholder="Ingresa el nombre">
+  </div>
+
+  <!-- Dropdown de Departamento -->
+  <div class="form-group">
+    <label for="departamento">Departamento:</label>
+    <select id="departamento" class="drop_depto" [(ngModel)]="departamento" (change)="onDepartamentoChange()">
+      <option *ngFor="let dep of departamentos" [value]="dep">{{ dep }}</option>
+    </select>
+  </div>
+
+  <!-- Dropdown de Municipio -->
+  <div class="form-group">
+    <label for="municipio">Municipio:</label>
+    <select id="municipio" class="drop_municipio" [(ngModel)]="municipio">
+      <option *ngFor="let mun of municipios" [value]="mun">{{ mun }}</option>
+    </select>
+  </div>
+
+  <!-- Campo Dirección -->
+  <div class="form-group">
+    <label for="direccion">Dirección: </label>
+    <input id="direccion" type="text" class="input_direccion" [(ngModel)]="direccion" placeholder="Ingresa la dirección">
+  </div>
+
+  <!-- Botones -->
+  <div class="guardar">
+    <button (click)="guardarDependencia()">Guardar</button>
+  </div>
+</div>

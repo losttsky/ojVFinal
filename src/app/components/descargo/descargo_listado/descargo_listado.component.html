@@ -1,0 +1,53 @@
+<div class="descargo-container">
+  <h2>Descargo Listado</h2>
+
+  <!-- Formulario con los campos Año Movimiento y Número Movimiento -->
+  <div class="formulario">
+    <div class="form-group">
+      <label for="anioMovimiento">Año Movimiento:</label>
+      <input type="number" id="anioMovimiento" [(ngModel)]="anioMovimiento" placeholder="Ingresa el Año de Movimiento" />
+    </div>
+
+    <div class="form-group">
+      <label for="numMovimiento">Número Movimiento:</label>
+      <input type="number" id="numMovimiento" [(ngModel)]="numMovimiento" placeholder="Ingresa el Número de Movimiento" />
+    </div>
+
+    <!-- Botones para actualizar y limpiar campos -->
+    <div class="botones">
+      <button (click)="actualizarConsulta()">Actualizar Consulta</button>
+      <button (click)="limpiarCampos()">Limpiar Campos</button>
+    </div>
+  </div>
+
+  <!-- Tabla de datos -->
+  <div class="tabla-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th>Fecha</th>
+          <th>Nombre Entrante</th>
+          <th>Dependencia</th>
+          <th>Técnico</th>
+          <th>Actualizado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of datosTabla; let i = index">
+          <td><input type="text" [(ngModel)]="item.modelo" /></td>
+          <td><input type="date" [(ngModel)]="item.fech" /></td>
+          <td><input type="text" [(ngModel)]="item.nombreEntr" /></td>
+          <td><input type="text" [(ngModel)]="item.depend" /></td>
+          <td><input type="text" [(ngModel)]="item.tecnico" /></td>
+          <td><input type="checkbox" [(ngModel)]="item.actualizado" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Botón para agregar nueva fila a la tabla -->
+<!--     <div class="acciones">
+      <button (click)="agregarFila()">Agregar Registro</button>
+    </div> -->
+  </div>
+</div>

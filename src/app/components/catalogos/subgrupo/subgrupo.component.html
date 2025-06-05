@@ -1,0 +1,27 @@
+<div class="grupo-container">
+  <h3>SubGrupo</h3>
+
+  <div class="form-group">
+    <label for="idGrupo">ID SubGrupo:</label>
+    <input
+      type="text"
+      id="idGrupo"
+      [(ngModel)]="idGrupo"
+      placeholder="Ingresa el ID del SubGrupo"
+      (focus)="limpiarCampo('idGrupo')"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="descripcion">Descripción:</label>
+    <input
+      type="text"
+      id="descripcion"
+      [(ngModel)]="descripcion"
+      placeholder="Ingresa la descripción del subgrupo"
+      (focus)="limpiarCampo('descripcion')"
+    />
+  </div>
+
+  <button class="btn" color="primary" (click)="buscarSubGrupo()">Buscar</button>
+</div>

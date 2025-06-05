@@ -1,0 +1,270 @@
+<div class="formulario-mov">
+  <h2>Movimientos de Entrada y Salida</h2>
+
+  <!-- Primera fila -->
+  <div class="row">
+    <div class="form-group">
+      <label for="anioMovimiento">Año Movimiento:</label>
+      <input
+        class="input_num"
+        type="number"
+        id="anioMovimiento"
+        [(ngModel)]="anioMovimiento"
+        placeholder="Ingresa el Año de Movimiento"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="tallerEntrega">Taller Entrega a:</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="tallerEntrega"
+        [(ngModel)]="tallerEntrega"
+        placeholder="Ingresa el Taller de Entrega"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="numMovimiento">Número Movimiento:</label>
+      <input
+        class="input_num"
+        type="number"
+        id="numMovimiento"
+        [(ngModel)]="numMovimiento"
+        placeholder="Ingresa el Número de Movimiento"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="fechaOperacion">Fecha Operación:</label>
+      <input
+        class="input_date"
+        type="date"
+        id="fechaOperacion"
+        [(ngModel)]="fechaOperacion"
+        placeholder="Ingresa la Fecha de Operación"
+      />
+    </div>
+  </div>
+
+  <!-- Segunda fila -->
+  <div class="row">
+    <div class="form-group">
+      <label for="nombreDescargo">Nombre Descargo:</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="nombreDescargo"
+        [(ngModel)]="nombreDescargo"
+        placeholder="Ingresa el Nombre de Descargo"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="lugarDescargo">Lugar Descargo:</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="lugarDescargo"
+        [(ngModel)]="lugarDescargo"
+        placeholder="Ingresa el Lugar de Descargo"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="usuarioRecibido">Usuario Recibido:</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="usuarioRecibido"
+        [(ngModel)]="usuarioRecibido"
+        placeholder="Ingresa el Usuario Recibido"
+      />
+    </div>
+  </div>
+
+  <!-- Datos adicionales -->
+  <div class="row">
+    <div class="form-group">
+      <label for="tecnicoEntrega">Técnico Entrega:</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="tecnicoEntrega"
+        [(ngModel)]="tecnicoEntrega"
+        placeholder="Ingresa el Técnico de Entrega"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="lugarEntrega">Lugar Entrega:</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="lugarEntrega"
+        [(ngModel)]="lugarEntrega"
+        placeholder="Ingresa el Lugar de Entrega"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="area">Área:</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="area"
+        [(ngModel)]="area"
+        placeholder="Ingresa el Área"
+      />
+    </div>
+  </div>
+
+  <!-- Departamento y Municipio -->
+  <div class="row">
+    <div class="form-group">
+      <label for="departamento">Departamento:</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="departamento"
+        [(ngModel)]="departamento"
+        placeholder="Ingresa el Departamento"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="municipio">Municipio:</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="municipio"
+        [(ngModel)]="municipio"
+        placeholder="Ingresa el Municipio"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="dependencia">Dependencia:</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="dependencia"
+        [(ngModel)]="dependencia"
+        placeholder="Ingresa la Dependencia"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="marca">Marca</label>
+      <input
+        class="input_txt"
+        type="text"
+        id="marca"
+        [(ngModel)]="marca"
+        placeholder="Ingresa la Marca"
+      />
+    </div>
+
+    <div class="form-group">
+        <label for="marca">Modelo</label>
+        <input
+          class="input_txt"
+          type="text"
+          id="modelo"
+          [(ngModel)]="modelo"
+          placeholder="Ingresa el Modelo"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="marca">Serie</label>
+        <input
+          class="input_txt"
+          type="text"
+          id="serie"
+          [(ngModel)]="serie"
+          placeholder="Ingresa la Serie"
+        />
+      </div>
+
+    <!-- Observaciones -->
+    <div class="form-group">
+      <label for="observaciones">Observaciones:</label>
+      <textarea
+        id="observaciones"
+        [(ngModel)]="observaciones"
+        placeholder="Ingresa las observaciones"
+      ></textarea>
+    </div>
+
+    <!-- Botones deshabilitados -->
+    <div class="responsabilidad">
+      <h3>Hoja de Responsabilidad</h3>
+      <button disabled>Entrega a Inventario</button>
+      <button disabled>Entregado en Mal Estado</button>
+      <button disabled>Equipo en Mal Estado</button>
+      <button disabled>Transporte Solo Nota</button>
+      <button disabled>Transporte Entregado a Persona</button>
+      <button disabled>Transporte Entrega Dependencia</button>
+    </div>
+
+    <!-- Tabla de artículos -->
+    <table>
+      <thead>
+        <tr>
+          <th>Grupo</th>
+          <th>SubGrupo</th>
+          <th>Artículo</th>
+          <th>Cantidad</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let articulo of articulos; let i = index">
+          <td>
+            <input
+              class="input_tabla"
+              type="text"
+              [(ngModel)]="articulo.grupo"
+            />
+          </td>
+          <td>
+            <input
+              class="input_tabla"
+              type="text"
+              [(ngModel)]="articulo.subgrupo"
+            />
+          </td>
+          <td>
+            <input
+              class="input_tabla"
+              type="text"
+              [(ngModel)]="articulo.articulo"
+            />
+          </td>
+          <td>
+            <input
+              class="input_tabla"
+              type="number"
+              [(ngModel)]="articulo.cantidad"
+            />
+          </td>
+          <td>
+            <input
+              class="input_tabla"
+              type="text"
+              [(ngModel)]="articulo.descripcion"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Botones principales -->
+    <div class="acciones">
+<!--       <button (click)="agregarArticulo()">Entrega de Equipo</button> -->
+      <button (click)="exportWord()">Hoja de Responsabilidad</button>
+    </div>
+  </div>
+</div>

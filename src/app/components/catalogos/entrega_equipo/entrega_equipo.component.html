@@ -1,0 +1,27 @@
+<div class="grupo-container">
+  <h3>Entrega Equipo</h3>
+
+  <div class="form-group">
+    <label for="idGrupo">ID Entrega Equipo:</label>
+    <input
+      type="text"
+      id="idGrupo"
+      [(ngModel)]="idGrupo"
+      placeholder="Ingresa el ID de la entrega de equipo"
+      (focus)="limpiarCampo('idGrupo')"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="descripcion">Descripción:</label>
+    <input
+      type="text"
+      id="descripcion"
+      [(ngModel)]="descripcion"
+      placeholder="Ingresa la descripción de la entrega de equipo"
+      (focus)="limpiarCampo('descripcion')"
+    />
+  </div>
+
+  <button class="btn" color="primary" (click)="buscarEntregaEquipo()">Buscar</button>
+</div>

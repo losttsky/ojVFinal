@@ -1,0 +1,49 @@
+<div class="serie-container">
+  <h2>Búsqueda por Serie</h2>
+
+  <!-- Input de serie -->
+  <div class="form-group">
+    <label for="serieBusqueda">Serie:</label>
+    <input
+      id="serieBusqueda"
+      type="text"
+      [(ngModel)]="serie"
+      placeholder="Ingresa la serie"
+    />
+  </div>
+
+  <!-- Botones Buscar / Limpiar -->
+  <div class="botones">
+    <button (click)="buscarSerie()">Buscar</button>
+    <button (click)="limpiar()">Limpiar</button>
+  </div>
+
+  <!-- Tabla de resultados -->
+  <table *ngIf="resultados.length > 0" class="tabla-serie">
+    <thead>
+      <tr>
+        <th>Grupo</th>
+        <th>SubGrupo</th>
+        <th>Artículo</th>
+        <th>Cantidad</th>
+        <th>Descripción</th>
+        <th>Serie</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of resultados; let i = index">
+        <td><input type="text" [(ngModel)]="item.grupo" /></td>
+        <td><input type="text" [(ngModel)]="item.subgrupo" /></td>
+        <td><input type="text" [(ngModel)]="item.articulo" /></td>
+        <td><input type="number" [(ngModel)]="item.cantidad" /></td>
+        <td><input type="text" [(ngModel)]="item.descripcion" /></td>
+        <td><input type="text" [(ngModel)]="item.serie" /></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Mensaje si no hay datos tras buscar -->
+  <p *ngIf="busquedaRealizada && resultados.length === 0" class="no-result">
+    No se encontraron registros para la serie indicada.
+  </p>
+</div>

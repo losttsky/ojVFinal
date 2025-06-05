@@ -1,0 +1,19 @@
+/* Contenedor general del formulario */
+.formulario-mov {
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  max-width: 1200px; /* Maximo ancho del formulario */
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Título principal */
+h2 {
+  text-align: center;
+  color: #004186;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+

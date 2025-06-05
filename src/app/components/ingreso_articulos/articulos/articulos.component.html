@@ -1,0 +1,151 @@
+<div class="articulos-container">
+  <!-- Fila 1: Grupo, Subgrupo, Artículo, Descripción -->
+  <div class="row">
+    <!-- Selector de Grupo -->
+    <div class="form-group">
+      <label for="grupo">Grupo</label>
+      <select id="grupo" [(ngModel)]="grupoSeleccionado">
+        <option value="">Seleccione un grupo</option>
+        <option value="Grupo 1">Grupo 1</option>
+        <option value="Grupo 2">Grupo 2</option>
+      </select>
+    </div>
+
+    <!-- Selector de Subgrupo -->
+    <div class="form-group">
+      <label for="subgrupo">Subgrupo</label>
+      <select id="subgrupo" [(ngModel)]="subgrupoSeleccionado">
+        <option value="">Seleccione un subgrupo</option>
+        <option value="Subgrupo 1">Subgrupo 1</option>
+        <option value="Subgrupo 2">Subgrupo 2</option>
+      </select>
+    </div>
+
+    <!-- Campo Artículo -->
+    <div class="form-group">
+      <label for="articulo">Artículo</label>
+      <input id="articulo" type="number" [(ngModel)]="articulo" />
+    </div>
+    <hr />
+    <!-- Campo Descripción (más ancho) -->
+    <div class="form-group descripcion">
+      <label for="descripcion">Descripción</label>
+      <input id="descripcion" type="text" [(ngModel)]="descripcion" />
+    </div>
+  </div>
+
+  <hr />
+  <!-- Fila 2: Checkboxes -->
+  <div class="row row-check">
+    <label
+      ><input type="checkbox" [(ngModel)]="ingresoInventario" /> Ingreso a
+      Inventario</label
+    >
+    <label><input type="checkbox" [(ngModel)]="taller" /> Taller</label>
+    <label><input type="checkbox" [(ngModel)]="repuestos" /> Repuestos</label>
+  </div>
+  <hr />
+  <!-- Fila 3: Medida, Marca, Modelo -->
+  <div class="row">
+    <div class="form-group">
+      <label for="medida">Medida</label>
+      <select id="medida" [(ngModel)]="medidaSeleccionada">
+        <option value="">Seleccione una medida</option>
+        <option value="CM">CM</option>
+        <option value="M">M</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="marca">Marca</label>
+      <select id="marca" [(ngModel)]="marcaSeleccionada">
+        <option value="">Seleccione una marca</option>
+        <option value="Marca 1">Marca 1</option>
+        <option value="Marca 2">Marca 2</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="modelo">Modelo</label>
+      <select id="modelo" [(ngModel)]="modeloSeleccionado">
+        <option value="">Seleccione un modelo</option>
+        <option value="Modelo 1">Modelo 1</option>
+        <option value="Modelo 2">Modelo 2</option>
+      </select>
+    </div>
+  </div>
+  <hr />
+  <!-- Fila 4: Serie, Entrega Taller, Estado, Fecha -->
+  <div class="row">
+    <div class="form-group">
+      <label for="serie">Serie</label>
+      <input id="serie" type="text" [(ngModel)]="serie" />
+    </div>
+
+    <div class="form-group">
+      <label for="entrega">Entrega Taller por</label>
+      <select id="entrega" [(ngModel)]="entregaTallerPor">
+        <option value="">Seleccione</option>
+        <option value="Persona 1">Persona 1</option>
+        <option value="Persona 2">Persona 2</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="estado">Estado del Dispositivo</label>
+      <select id="estado" [(ngModel)]="estadoDispositivo">
+        <option value="">Seleccione</option>
+        <option value="Nuevo">Nuevo</option>
+        <option value="Usado">Usado</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaIngreso">Fecha Ingreso Taller</label>
+      <input id="fechaIngreso" type="date" [(ngModel)]="fechaIngresoTaller" />
+    </div>
+  </div>
+  <hr />
+  <!-- Fila 5: Existencias, Serie Factura, NIT, Número Forma -->
+  <div class="row">
+    <div class="form-group">
+      <label for="minima">Existencia Mínima</label>
+      <input id="minima" type="number" [(ngModel)]="existenciaMinima" />
+    </div>
+
+    <div class="form-group">
+      <label for="maxima">Existencia Máxima</label>
+      <input id="maxima" type="number" [(ngModel)]="existenciaMaxima" />
+    </div>
+
+    <div class="form-group">
+      <label for="serieFactura">Serie Factura</label>
+      <input id="serieFactura" type="text" [(ngModel)]="serieFactura" />
+    </div>
+
+    <div class="form-group">
+      <label for="nit">NIT</label>
+      <select id="nit" [(ngModel)]="nitSeleccionado">
+        <option value="">Seleccione un NIT</option>
+        <option value="NIT 1">NIT 1</option>
+        <option value="NIT 2">NIT 2</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="numeroForma">Número Forma</label>
+      <input id="numeroForma" type="text" [(ngModel)]="numeroForma" />
+    </div>
+  </div>
+  <hr />
+  <!-- Fila final: Existencia + Inventario + Botón -->
+  <div class="existencia-section">
+    <h3>Existencia</h3>
+    <input type="number" [(ngModel)]="existencia" readonly />
+
+    <label for="inventario">Número Inventario</label>
+    <input id="inventario" type="text" [(ngModel)]="numeroInventario" />
+
+    <button (click)="ingresar()">Ingresar Artículo</button>
+  </div>
+</div>

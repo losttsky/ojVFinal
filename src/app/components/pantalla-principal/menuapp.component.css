@@ -1,0 +1,255 @@
+/* Base (desktop grande) */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+.pantalla-principal {
+  flex: 1 1 auto;
+  font-family: "Segoe UI", sans-serif;
+  position: relative;
+  overflow-x: hidden;
+  background-color: #f0f8ff;
+}
+.instruccion {
+  font-size: 62px;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+.encabezado {
+  background-color: #004186;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+.logo {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  top: 2.5px;
+  right: 20px;
+}
+
+.logo:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+.boton-barra {
+  position: absolute;
+  top: 35px;
+  left: 20px;
+  padding: 8px 15px;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  color: #004186;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  height: 50px;
+}
+.boton-barra:hover {
+  background-color: #dceaff;
+}
+.offcanvas.izquierdo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 400px;
+  background-color: #004186;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  padding: 20px;
+  z-index: 999;
+  overflow-y: auto;
+}
+.offcanvas.izquierdo.visible {
+  transform: translateX(0);
+}
+.offcanvas-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+.cerrar {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+  margin-bottom: 10px;
+}
+.seccion-titulo {
+  color: white;
+  font-size: 17px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+  padding-bottom: 5px;
+}
+.submenu-btn {
+  background-color: white;
+  color: #004186;
+  border: none;
+  padding: 5px 10px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+.submenu-btn:hover {
+  background-color: #dceaff;
+}
+
+.submenu-btn.salir {
+  background-color: #ffdddd;
+  color: #b00000;
+}
+.submenu-btn.salir:hover {
+  background-color: #ffbbbb;
+}
+
+.submenu-btn.inicio {
+  background-color: #ffffff;
+  color: black;
+}
+.submenu-btn.inicio:hover {
+  background-color: #0080ff;
+  color: white;
+}
+
+.contenedor-principal {
+  padding: 20px;
+  background-color: white;
+  height: auto;
+  min-height: 470px;
+  max-height: 80%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.footer {
+  flex-shrink: 0;
+  background-color: #004186;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-family: "Segoe UI", sans-serif;
+  bottom: 0;
+}
+
+/* ---------------------------- */
+/* Responsivo: tablets (<=1024px) */
+@media (max-width: 1024px) {
+  .logo {
+    width: 100px;
+    height: 100px;
+    right: 10px;
+  }
+  .boton-barra {
+    top: 25px;
+    left: 10px;
+    padding: 6px 12px;
+    height: 45px;
+    font-size: 0.9rem;
+  }
+  .offcanvas.izquierdo {
+    width: 60%;
+    padding: 16px;
+  }
+  .seccion-titulo {
+    font-size: 16px;
+  }
+  .submenu-btn {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .contenedor-principal {
+    padding: 16px;
+    min-height: 400px;
+  }
+  .footer {
+    display: none;
+  }
+}
+
+/* ---------------------------- */
+/* Responsivo: móviles (<=768px) */
+@media (max-width: 768px) {
+  .instruccion {
+    font-size: 42px;
+  }
+  .encabezado {
+    padding: 16px;
+  }
+  .logo {
+    display: none; /* Ocultar logo en pantallas pequeñas */
+  }
+  .boton-barra {
+    top: 20px;
+    left: 8px;
+    padding: 5px 10px;
+    height: 40px;
+    font-size: 0.8rem;
+  }
+  .offcanvas.izquierdo {
+    width: 50%;
+    padding: 12px;
+  }
+  .seccion-titulo {
+    font-size: 15px;
+  }
+  .submenu-btn {
+    font-size: 11px;
+    padding: 5px 6px;
+  }
+  .contenedor-principal {
+    padding: 12px;
+    min-height: 300px;
+  }
+  .footer {
+    display: none;
+  }
+}
+
+/* ---------------------------- */
+/* Responsivo: móviles muy pequeños (<=480px) */
+@media (max-width: 480px) {
+  .encabezado h1 {
+    font-size: 1.2rem;
+  }
+  .boton-barra {
+    top: 16px;
+    left: 6px;
+    padding: 4px 8px;
+    height: 36px;
+    font-size: 0.75rem;
+  }
+  .offcanvas.izquierdo {
+    width: 50%;
+    padding: 8px;
+  }
+  .submenu-btn {
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+  .contenedor-principal {
+    padding: 8px;
+    min-height: 200px;
+  }
+  .footer {
+    display: none;
+  }
+}

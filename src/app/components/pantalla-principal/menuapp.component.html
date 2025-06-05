@@ -1,0 +1,88 @@
+<div class="pantalla-principal">
+  <!-- Encabezado -->
+  <div class="encabezado">
+    <h1>Hoja de responsabilidades</h1>
+    <button class="boton-barra" (click)="toggleBarra()">Menú</button>
+    <div class="img_logo">
+      <a (click)="seleccionarSubmenu('Inicio')"><img src="assets/img/logo2.png" alt="Logo Organismo Judicial" class="logo" /></a>
+    </div>
+  </div>
+
+  <!-- Menú lateral izquierdo -->
+  <div class="offcanvas izquierdo" [class.visible]="mostrarBarra">
+    <div class="offcanvas-content">
+      <button class="cerrar" (click)="toggleBarra()">✖</button>
+
+      <!-- Botón de Salida -->
+      <h3 class="seccion-titulo">Sistema</h3>
+      <button (click)="confirmarSalida()" class="submenu-btn salir">
+        Salir
+      </button>
+      <button (click)="seleccionarSubmenu('Inicio')" class="submenu-btn inicio">
+        Inicio
+      </button>
+
+      <!-- Título: Catálogos -->
+      <h3 class="seccion-titulo">Catálogos</h3>
+      <button
+        *ngFor="let item of catalogos"
+        (click)="seleccionarSubmenu(item)"
+        class="submenu-btn"
+      >
+        {{ item }}
+      </button>
+
+      <!-- Título: Ingreso Artículos -->
+      <h3 class="seccion-titulo">Ingreso Artículos</h3>
+      <button
+        *ngFor="let item of ingresoArticulos"
+        (click)="seleccionarSubmenu(item)"
+        class="submenu-btn"
+      >
+        {{ item }}
+      </button>
+
+      <!-- Título: Movimientos -->
+      <h3 class="seccion-titulo">Movimientos</h3>
+      <button
+        *ngFor="let item of Movimientos"
+        (click)="seleccionarSubmenu(item)"
+        class="submenu-btn"
+      >
+        {{ item }}
+      </button>
+
+      <!-- Título: Descargo -->
+      <h3 class="seccion-titulo">Descargo</h3>
+      <button
+        *ngFor="let item of descargo"
+        (click)="seleccionarSubmenu(item)"
+        class="submenu-btn"
+      >
+        {{ item }}
+      </button>
+
+      <!-- Título: Consultas -->
+      <h3 class="seccion-titulo">Consultas</h3>
+      <button
+        *ngFor="let item of consultas"
+        (click)="seleccionarSubmenu(item)"
+        class="submenu-btn"
+      >
+        {{ item }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Contenedor principal -->
+  <div class="contenedor-principal">
+    <!-- Aquí se cargará el componente dinámico -->
+    <ng-container *ngIf="submenuSeleccionado">
+      <ng-container *ngComponentOutlet="submenuSeleccionado"></ng-container>
+    </ng-container>
+  </div>
+</div>
+  <!-- Footer -->
+  <div class="footer">
+    <p>© 2025 Gerencia de Informática</p>
+  </div>
