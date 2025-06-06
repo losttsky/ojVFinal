@@ -1,6 +1,6 @@
 .default-container {
   max-width: 900px;
-  margin: 100px auto;
+  margin: 50px auto;
   padding: 24px;
   background: #fff;
   border-radius: 8px;
@@ -11,12 +11,11 @@
 h2 {
   text-align: center;
   color: #004186;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .logo {
   display: block;
   margin: 0 auto 20px;
-  width: 100px;
+  width: 250px;
 }
-

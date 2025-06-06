@@ -1,33 +1,38 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Para usar ngModel
+import { FormsModule } from '@angular/forms';
+import { MovimientosService } from '../../../services/movimientos.service';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-movimientos',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Importamos los módulos necesarios
-  templateUrl: './movimientos.component.html', // HTML del componente
-  styleUrls: ['./movimientos.component.css'], // Estilos del componente
+  imports: [CommonModule, FormsModule, NgIf, NgFor],
+  templateUrl: './movimientos.component.html',
+  styleUrls: ['./movimientos.component.css'],
 })
-export class MovimientosComponent  {
-  idGrupo: string = ''; // Variable para el ID del Grupo
-  descripcion: string = ''; // Variable para la Descripción del Grupo
-  submenuSeleccionado: any;
+export class MovimientosComponent {
+  idGrupo: string = '';
+  descripcion: string = '';
+  movimientos: any[] = [];
+  mostrarModal = false;
 
-  // Función para manejar la búsqueda
+  constructor(private movimientosService: MovimientosService) {}
+
   buscarMovimientos() {
-    console.log('Buscar movimiento con:', {
-      idGrupo: this.idGrupo,
-      descripcion: this.descripcion,
+    this.movimientosService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
+      this.movimientos = res;
+      this.mostrarModal = true;
     });
-    // Aquí agregaremos la lógica para consultar la base de datos
   }
 
-  // Función para limpiar el campo cuando se hace foco
+  cerrarModal() {
+    this.mostrarModal = false;
+  }
+
   limpiarCampo(campo: string) {
-    // Verificamos si el campo es igual a una propiedad de GrupoComponent
     if (campo in this) {
-      (this as any)[campo] = ''; // Limpiamos el valor de la propiedad que coincide con el nombre del campo
+      (this as any)[campo] = '';
     }
   }
 }

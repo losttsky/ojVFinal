@@ -25,3 +25,25 @@
 
   <button class="btn" color="primary" (click)="buscarMovimientos()">Buscar</button>
 </div>
+
+<!-- Modal para mostrar los resultados -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-content">
+    <h4>Resultados</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>ID Movimiento</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mov of movimientos">
+          <td>{{ mov.ID_MOVIMIENTO }}</td>
+          <td>{{ mov.DESCRIPCION }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="cerrarModal()">Cerrar</button>
+  </div>
+</div>

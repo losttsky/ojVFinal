@@ -25,3 +25,25 @@
 
   <button class="btn" color="primary" (click)="buscarTecnicos()">Buscar</button>
 </div>
+
+<!-- Modal emergente -->
+<div *ngIf="mostrarModal" class="modal-fondo">
+  <div class="modal-contenido">
+    <h4>Resultados Técnicos</h4>
+    <table class="tabla-resultados">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of tecnicos">
+          <td>{{ t.ID_TECNICO }}</td>
+          <td>{{ t.DESCRIPCION }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn" (click)="cerrarModal()">Cerrar</button>
+  </div>
+</div>

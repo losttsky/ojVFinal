@@ -1,33 +1,38 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Para usar ngModel
+import { FormsModule } from '@angular/forms';
+import { EntregaEquipoService } from '../../../services/entrega_equipo.service';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-entrega_equipo',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Importamos los módulos necesarios
-  templateUrl: './entrega_equipo.component.html', // HTML del componente
-  styleUrls: ['./entrega_equipo.component.css'], // Estilos del componente
+  imports: [CommonModule, FormsModule, NgIf, NgFor],
+  templateUrl: './entrega_equipo.component.html',
+  styleUrls: ['./entrega_equipo.component.css'],
 })
 export class EntregaEquipoComponent {
-  idGrupo: string = ''; // Variable para el ID del Grupo
-  descripcion: string = ''; // Variable para la Descripción del Grupo
-submenuSeleccionado: any;
+  idGrupo: string = '';
+  descripcion: string = '';
+  entregas: any[] = [];
+  mostrarModal = false;
 
-  // Función para manejar la búsqueda
+  constructor(private entregaService: EntregaEquipoService) {}
+
   buscarEntregaEquipo() {
-    console.log('Buscar grupo con:', {
-      idGrupo: this.idGrupo,
-      descripcion: this.descripcion,
+    this.entregaService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
+      this.entregas = res;
+      this.mostrarModal = true;
     });
-    // Aquí agregaremos la lógica para consultar la base de datos
   }
 
-  // Función para limpiar el campo cuando se hace foco
+  cerrarModal() {
+    this.mostrarModal = false;
+  }
+
   limpiarCampo(campo: string) {
-    // Verificamos si el campo es igual a una propiedad de GrupoComponent
     if (campo in this) {
-      (this as any)[campo] = ''; // Limpiamos el valor de la propiedad que coincide con el nombre del campo
+      (this as any)[campo] = '';
     }
   }
 }

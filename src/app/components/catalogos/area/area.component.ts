@@ -1,33 +1,38 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Para usar ngModel
+import { FormsModule } from '@angular/forms';
+import { AreaService } from '../../../services/area.service';// Importa el servicio para la peticion a la base de datos
+import { NgIf, NgFor } from '@angular/common'; // Para *ngIf y *ngFor
 
 @Component({
   selector: 'app-area',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Importamos los módulos necesarios
-  templateUrl: './area.component.html', // HTML del componente
-  styleUrls: ['./area.component.css'], // Estilos del componente
+  imports: [CommonModule, FormsModule, NgIf, NgFor],
+  templateUrl: './area.component.html',
+  styleUrls: ['./area.component.css'],
 })
 export class AreaComponent {
-  idGrupo: string = ''; // Variable para el ID del Grupo
-  descripcion: string = ''; // Variable para la Descripción del Grupo
-submenuSeleccionado: any;
+  idGrupo: string = '';
+  descripcion: string = '';
+  areas: any[] = []; // Lista de áreas encontradas
+  mostrarModal = false; // Controla la visibilidad de la pestaña emergente
 
-  // Función para manejar la búsqueda
+  constructor(private areaService: AreaService) {}
+
   buscarArea() {
-    console.log('Buscar grupo con:', {
-      idGrupo: this.idGrupo,
-      descripcion: this.descripcion,
+    this.areaService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
+      this.areas = res;
+      this.mostrarModal = true;
     });
-    // Aquí agregaremos la lógica para consultar la base de datos
   }
 
-  // Función para limpiar el campo cuando se hace foco
+  cerrarModal() {
+    this.mostrarModal = false;
+  }
+
   limpiarCampo(campo: string) {
-    // Verificamos si el campo es igual a una propiedad de GrupoComponent
     if (campo in this) {
-      (this as any)[campo] = ''; // Limpiamos el valor de la propiedad que coincide con el nombre del campo
+      (this as any)[campo] = '';
     }
   }
 }

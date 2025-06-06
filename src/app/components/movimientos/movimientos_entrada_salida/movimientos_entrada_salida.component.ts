@@ -5,13 +5,14 @@ import { HttpClient } from '@angular/common/http';
 import PizZip from 'pizzip';
 import Docxtemplater from 'docxtemplater';
 import { saveAs } from 'file-saver';
-
+import { MovimientosESService } from '../../../services/movimientosEs.service';
 @Component({
   selector: 'app-movimientos-entrada-salida',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './movimientos_entrada_salida.component.html',
   styleUrls: ['./movimientos_entrada_salida.component.css'],
+  providers: [MovimientosESService],
 })
 export class MovimientosEntradaSalidaComponent {
   /*   dependencia = 'JUZGADO CUARTO…';  
@@ -76,76 +77,110 @@ export class MovimientosEntradaSalidaComponent {
     });
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private movimientosService: MovimientosESService
+  ) {}
+
+  private obtenerDatosMovimiento() {
+    return {
+      anioMovimiento: this.anioMovimiento,
+      numMovimiento: this.numMovimiento,
+      fechaOperacion: this.fechaOperacion,
+      usuarioRecibido: this.usuarioRecibido,
+      tecnicoEntrega: this.tecnicoEntrega,
+      lugarEntrega: this.lugarEntrega,
+      nombreDescargo: this.nombreDescargo,
+      lugarDescargo: this.lugarDescargo,
+      area: this.area,
+      dependencia: this.dependencia,
+      municipio: this.municipio,
+      departamento: this.departamento,
+      observaciones: this.observaciones,
+      marca: this.marca,
+      modelo: this.modelo,
+      serie: this.serie,
+      articulos: this.articulos,
+    };
+  }
 
   exportWord() {
-    this.http
-      .get('/assets/template.docx', {
-        responseType: 'blob',
-      })
-      .subscribe(
-        (blob) => {
-          blob
-            .arrayBuffer()
-            .then((buffer) => {
-              let zip: PizZip;
-              try {
-                zip = new PizZip(buffer);
-              } catch (e) {
-                console.error('❌ No es un ZIP válido:', e);
-                return;
-              }
+    const datos = this.obtenerDatosMovimiento();
 
-              const doc = new Docxtemplater(zip, {
-                paragraphLoop: true,
-                linebreaks: true,
-              });
+    this.movimientosService.guardarMovimiento(datos).subscribe({
+      next: () => {
+        alert('✅ Datos guardados correctamente');
 
-              // formatear fecha y día
-              const opcionesFecha: Intl.DateTimeFormatOptions = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-              };
-              const fechaStr = this.fechaOperacion
-                ? new Date(this.fechaOperacion).toLocaleDateString(
-                    'es-ES',
-                    opcionesFecha
-                  )
-                : '';
-              const diaSemana = this.fechaOperacion
-                ? new Date(this.fechaOperacion).toLocaleDateString('es-ES', {
-                    weekday: 'long',
-                  })
-                : '';
-              // construimos el array pages
-              const render_template = this.articulos[0];
-
-              doc.setData({
-                no_referencia: String(this.numMovimiento),
-                anio_actual: String(this.anioMovimiento),
-                fecha: this.fechaOperacion || '',
-                dependencia: this.dependencia,
-                departamento: this.departamento,
-                municipio: this.municipio,
-                inventario: render_template.articulo,
-                cantidad: render_template.cantidad,
-                dispositivo: render_template.descripcion,
-                marca: this.marca,
-                modelo: this.modelo,
-                serie: this.serie,
-                persona_entrega: this.tecnicoEntrega,
-                usuario_recibido: this.usuarioRecibido,
-                dia: new Date(this.fechaOperacion || '').toLocaleDateString(
-                  'es-ES',
-                  {
-                    weekday: 'long',
+        this.http
+          .get('/assets/template.docx', {
+            responseType: 'blob',
+          })
+          .subscribe(
+            (blob) => {
+              blob
+                .arrayBuffer()
+                .then((buffer) => {
+                  let zip: PizZip;
+                  try {
+                    zip = new PizZip(buffer);
+                  } catch (e) {
+                    console.error('❌ No es un ZIP válido:', e);
+                    return;
                   }
-                ),
-                tecnico: this.tecnicoEntrega,
-              });
 
-              /*const total = this.articulos.length;
+                  const doc = new Docxtemplater(zip, {
+                    paragraphLoop: true,
+                    linebreaks: true,
+                  });
+
+                  // formatear fecha y día
+                  const opcionesFecha: Intl.DateTimeFormatOptions = {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                  };
+                  const fechaStr = this.fechaOperacion
+                    ? new Date(this.fechaOperacion).toLocaleDateString(
+                        'es-ES',
+                        opcionesFecha
+                      )
+                    : '';
+                  const diaSemana = this.fechaOperacion
+                    ? new Date(this.fechaOperacion).toLocaleDateString(
+                        'es-ES',
+                        {
+                          weekday: 'long',
+                        }
+                      )
+                    : '';
+                  // construimos el array pages
+                  const render_template = this.articulos[0];
+
+                  doc.setData({
+                    no_referencia: String(this.numMovimiento),
+                    anio_actual: String(this.anioMovimiento),
+                    fecha: this.fechaOperacion || '',
+                    dependencia: this.dependencia,
+                    departamento: this.departamento,
+                    municipio: this.municipio,
+                    inventario: render_template.articulo,
+                    cantidad: render_template.cantidad,
+                    dispositivo: render_template.descripcion,
+                    marca: this.marca,
+                    modelo: this.modelo,
+                    serie: this.serie,
+                    persona_entrega: this.tecnicoEntrega,
+                    usuario_recibido: this.usuarioRecibido,
+                    dia: new Date(this.fechaOperacion || '').toLocaleDateString(
+                      'es-ES',
+                      {
+                        weekday: 'long',
+                      }
+                    ),
+                    tecnico: this.tecnicoEntrega,
+                  });
+
+                  /*const total = this.articulos.length;
               const pagesData = this.articulos.map((a, i) => ({
                 PAGES: String(i + 1),
                 NUMPAGES: String(total),
@@ -174,47 +209,50 @@ export class MovimientosEntradaSalidaComponent {
               doc.setData({ pages: pagesData });
               */
 
-              try {
-                doc.render();
-              } catch (error: any) {
-                const e = error;
-                console.log(
-                  'Error al renderizar el documento:',
-                  JSON.stringify(
-                    {
-                      message: e.message,
-                      name: e.name,
-                      stack: e.stack,
-                      properties: e.properties,
-                    },
-                    null,
-                    2
+                  try {
+                    doc.render();
+                  } catch (error: any) {
+                    const e = error;
+                    console.log(
+                      'Error al renderizar el documento:',
+                      JSON.stringify(
+                        {
+                          message: e.message,
+                          name: e.name,
+                          stack: e.stack,
+                          properties: e.properties,
+                        },
+                        null,
+                        2
+                      )
+                    );
+                    throw error;
+                  }
+
+                  // generar y descargar
+                  const out = doc.getZip().generate({ type: 'uint8array' });
+                  const blobOut = new Blob([out], {
+                    type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                  });
+                  // guardar el archivo
+                  saveAs(
+                    blobOut,
+                    `Nota_Responsabilidad_${this.numMovimiento}.docx`
+                  );
+                  //convertir a PDF
+                  // this.convertToPDF(blobOut);
+                })
+                .catch((err) =>
+                  console.error(
+                    '❌ Error convirtiendo Blob a ArrayBuffer:',
+                    err
                   )
                 );
-                throw error;
-              }
-
-              // generar y descargar
-              const out = doc.getZip().generate({ type: 'uint8array' });
-              const blobOut = new Blob([out], {
-                type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-              });
-               // guardar el archivo
-              saveAs(
-                blobOut,
-                `Nota_Responsabilidad_${this.numMovimiento}.docx`
-              );
-              //convertir a PDF
-              // this.convertToPDF(blobOut);
-            })
-            .catch((err) =>
-              console.error('❌ Error convirtiendo Blob a ArrayBuffer:', err)
-            );
-        },
-        (err) => console.error('❌ Error al descargar la plantilla:', err)
-      );
-  }
-  /* Funcion para exportar a PDF por medio de NodeJS
+            },
+            (err) => console.error('❌ Error al descargar la plantilla:', err)
+          );
+      },
+      /* Funcion para exportar a PDF por medio de NodeJS
   convertToPDF(docxBlob: Blob) {
     const formData = new FormData();
     formData.append(
@@ -236,4 +274,9 @@ export class MovimientosEntradaSalidaComponent {
         }
       );
   }*/
+      error: () => {
+        alert('❌ Error al guardar los datos');
+      },
+    });
+  }
 }

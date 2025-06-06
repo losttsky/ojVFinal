@@ -1,52 +1,19 @@
 <div class="rango-container">
   <h2>Reporte por Rango de Fechas</h2>
-
-  <!-- Formulario de selección de rango -->
   <div class="form-group">
     <label for="fechaInicio">Fecha inicio:</label>
-    <input
-      id="fechaInicio"
-      type="date"
-      [(ngModel)]="fechaInicio"
-      (focus)="limpiarCampo('reportes')"
-    />
+    <input id="fechaInicio" type="date" [(ngModel)]="fechaInicio" />
   </div>
-
   <div class="form-group">
     <label for="fechaFin">Fecha fin:</label>
-    <input
-      id="fechaFin"
-      type="date"
-      [(ngModel)]="fechaFin"
-      (focus)="limpiarCampo('reportes')"
-    />
+    <input id="fechaFin" type="date" [(ngModel)]="fechaFin" />
   </div>
 
-  <!-- Botones de acción -->
   <div class="botones">
     <button (click)="buscarReportes()">Buscar</button>
     <button (click)="limpiar()">Limpiar</button>
   </div>
 
-  <!-- Tabla de resultados -->
-  <table *ngIf="reportes.length > 0" class="tabla-reportes">
-    <thead>
-      <tr>
-        <th>Fecha</th>
-        <th>Descripción</th>
-        <th>Monto</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let rep of reportes; let i = index">
-        <td><input type="date" [(ngModel)]="rep.fecha" /></td>
-        <td><input type="text"   [(ngModel)]="rep.descripcion" /></td>
-        <td><input type="number" [(ngModel)]="rep.monto" /></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Mensaje cuando no hay resultados -->
   <p *ngIf="reportes.length === 0 && busquedaRealizada">
     No se encontraron reportes en ese rango.
   </p>

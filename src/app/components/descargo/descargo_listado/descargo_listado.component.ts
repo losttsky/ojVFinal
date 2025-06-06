@@ -1,38 +1,57 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DescargoListadoService } from '../../../services/descargo_listado.service';
 
 @Component({
   selector: 'app-descargo-listado',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './descargo_listado.component.html', // El HTML del componente
-  styleUrls: ['./descargo_listado.component.css'], // Los estilos del componente
+  templateUrl: './descargo_listado.component.html',
+  styleUrls: ['./descargo_listado.component.css'],
 })
 export class DescargoListadoComponent {
-  // Variables para almacenar los valores ingresados en el formulario
   anioMovimiento: number = 2025;
   numMovimiento: number = 190;
-  // Datos de la tabla
-  datosTabla: any[] = [
-    { modelo: '', fech: '', nombreEntr: '', depend: '', tecnico: '', actualizado: false },
-  ];
+  datosTabla: any[] = [];
 
-  // Función para agregar una nueva fila en la tabla
-  agregarFila() {
-    this.datosTabla.push({ modelo: '', fech: '', nombreEntr: '', depend: '', tecnico: '', actualizado: false });
+  constructor(private descargoService: DescargoListadoService) {}
+
+  actualizarConsulta() {
+    // Enviar los datos para actualizar solo si hay datos cargados
+    if (this.datosTabla.length > 0) {
+      const marcados = this.datosTabla.filter(item => item.actualizado);
+      if (marcados.length > 0) {
+        this.descargoService.actualizarArticulos(this.anioMovimiento, this.numMovimiento, this.datosTabla).subscribe({
+          next: () => {
+            alert('✅ Artículos actualizados (desligados) correctamente');
+            this.obtenerArticulos(); // vuelve a cargar
+          },
+          error: () => alert('❌ Error al actualizar artículos'),
+        });
+      } else {
+        this.obtenerArticulos(); // si no hay marcados, solo consulta
+      }
+    } else {
+      this.obtenerArticulos(); // si no hay nada, consulta normal
+    }
   }
 
-  // Función para limpiar los campos
+  obtenerArticulos() {
+    this.descargoService.obtenerArticulos(this.anioMovimiento, this.numMovimiento).subscribe({
+      next: (data) => {
+        this.datosTabla = data;
+      },
+      error: () => {
+        alert('❌ Error al obtener artículos');
+        this.datosTabla = [];
+      }
+    });
+  }
+
   limpiarCampos() {
     this.anioMovimiento = 2025;
     this.numMovimiento = 190;
-    this.datosTabla = [{ modelo: '', fech: '', nombreEntr: '', depend: '', tecnico: '', actualizado: false }];
-  }
-
-  // Función para actualizar la consulta
-  actualizarConsulta() {
-    console.log('Consulta actualizada:', { anioMovimiento: this.anioMovimiento, numMovimiento: this.numMovimiento });
-    // Aquí podrías agregar la lógica para consultar la base de datos o realizar la búsqueda
+    this.datosTabla = [];
   }
 }

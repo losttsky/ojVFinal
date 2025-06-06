@@ -25,3 +25,17 @@
 
   <button class="btn" color="primary" (click)="buscarEntregaEquipo()">Buscar</button>
 </div>
+
+<!-- Modal emergente -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-content">
+    <span class="close" (click)="cerrarModal()">&times;</span>
+    <h3>Resultados de Entregas</h3>
+    <ul>
+      <li *ngFor="let entrega of entregas">
+        <strong>ID:</strong> {{ entrega.ID_ENTREGO_A_TALLER }} |
+        <strong>Descripción:</strong> {{ entrega.DESCRIPCION_ENTREGO_A_TALLER }}
+      </li>
+    </ul>
+  </div>
+</div>

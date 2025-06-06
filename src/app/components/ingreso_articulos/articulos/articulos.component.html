@@ -2,22 +2,21 @@
   <!-- Fila 1: Grupo, Subgrupo, Artículo, Descripción -->
   <div class="row">
     <!-- Selector de Grupo -->
-    <div class="form-group">
-      <label for="grupo">Grupo</label>
-      <select id="grupo" [(ngModel)]="grupoSeleccionado">
-        <option value="">Seleccione un grupo</option>
-        <option value="Grupo 1">Grupo 1</option>
-        <option value="Grupo 2">Grupo 2</option>
-      </select>
-    </div>
+    <select id="grupo" [(ngModel)]="grupoSeleccionado">
+      <option value="">Seleccione un grupo</option>
+      <option *ngFor="let g of grupos" [value]="g.id_grupo">
+        {{ g.descripcion }}
+      </option>
+    </select>
 
     <!-- Selector de Subgrupo -->
     <div class="form-group">
       <label for="subgrupo">Subgrupo</label>
       <select id="subgrupo" [(ngModel)]="subgrupoSeleccionado">
         <option value="">Seleccione un subgrupo</option>
-        <option value="Subgrupo 1">Subgrupo 1</option>
-        <option value="Subgrupo 2">Subgrupo 2</option>
+        <option *ngFor="let sg of subgrupos" [value]="sg.id_subgrupo">
+          {{ sg.descripcion }}
+        </option>
       </select>
     </div>
 
@@ -51,8 +50,9 @@
       <label for="medida">Medida</label>
       <select id="medida" [(ngModel)]="medidaSeleccionada">
         <option value="">Seleccione una medida</option>
-        <option value="CM">CM</option>
-        <option value="M">M</option>
+        <option *ngFor="let m of medidas" [value]="m.id_medida">
+          {{ m.descripcion }}
+        </option>
       </select>
     </div>
 
@@ -60,8 +60,9 @@
       <label for="marca">Marca</label>
       <select id="marca" [(ngModel)]="marcaSeleccionada">
         <option value="">Seleccione una marca</option>
-        <option value="Marca 1">Marca 1</option>
-        <option value="Marca 2">Marca 2</option>
+        <option *ngFor="let m of marcas" [value]="m.id_marca">
+          {{ m.descripcion }}
+        </option>
       </select>
     </div>
 
@@ -69,8 +70,9 @@
       <label for="modelo">Modelo</label>
       <select id="modelo" [(ngModel)]="modeloSeleccionado">
         <option value="">Seleccione un modelo</option>
-        <option value="Modelo 1">Modelo 1</option>
-        <option value="Modelo 2">Modelo 2</option>
+        <option *ngFor="let m of modelos" [value]="m.id_modelo">
+          {{ m.descripcion }}
+        </option>
       </select>
     </div>
   </div>
@@ -86,8 +88,9 @@
       <label for="entrega">Entrega Taller por</label>
       <select id="entrega" [(ngModel)]="entregaTallerPor">
         <option value="">Seleccione</option>
-        <option value="Persona 1">Persona 1</option>
-        <option value="Persona 2">Persona 2</option>
+        <option *ngFor="let t of tecnicos" [value]="t.id_tecnico">
+          {{ t.descripcion }}
+        </option>
       </select>
     </div>
 
@@ -95,8 +98,9 @@
       <label for="estado">Estado del Dispositivo</label>
       <select id="estado" [(ngModel)]="estadoDispositivo">
         <option value="">Seleccione</option>
-        <option value="Nuevo">Nuevo</option>
-        <option value="Usado">Usado</option>
+        <option *ngFor="let e of estados" [value]="e.id_estado">
+          {{ e.descripcion }}
+        </option>
       </select>
     </div>
 
@@ -127,8 +131,7 @@
       <label for="nit">NIT</label>
       <select id="nit" [(ngModel)]="nitSeleccionado">
         <option value="">Seleccione un NIT</option>
-        <option value="NIT 1">NIT 1</option>
-        <option value="NIT 2">NIT 2</option>
+        <option *ngFor="let n of nits" [value]="n.nit">{{ n.nombre }}</option>
       </select>
     </div>
 

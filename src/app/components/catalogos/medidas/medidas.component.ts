@@ -1,33 +1,38 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Para usar ngModel
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor } from '@angular/common';
+import { MedidasService } from '../../../services/medidas.service';
 
 @Component({
-  selector: 'app-modelos',
+  selector: 'app-medidas',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Importamos los módulos necesarios
-  templateUrl: './medidas.component.html', // HTML del componente
-  styleUrls: ['./medidas.component.css'], // Estilos del componente
+  imports: [CommonModule, FormsModule, NgIf, NgFor],
+  templateUrl: './medidas.component.html',
+  styleUrls: ['./medidas.component.css'],
 })
-export class MedidasComponent  {
-  idGrupo: string = ''; // Variable para el ID del Grupo
-  descripcion: string = ''; // Variable para la Descripción del Grupo
-  submenuSeleccionado: any;
+export class MedidasComponent {
+  idGrupo: string = '';
+  descripcion: string = '';
+  medidas: any[] = [];
+  mostrarModal = false;
 
-  // Función para manejar la búsqueda
+  constructor(private medidasService: MedidasService) {}
+
   buscarMedidas() {
-    console.log('Buscar medidas con:', {
-      idGrupo: this.idGrupo,
-      descripcion: this.descripcion,
+    this.medidasService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
+      this.medidas = res;
+      this.mostrarModal = true;
     });
-    // Aquí agregaremos la lógica para consultar la base de datos
   }
 
-  // Función para limpiar el campo cuando se hace foco
+  cerrarModal() {
+    this.mostrarModal = false;
+  }
+
   limpiarCampo(campo: string) {
-    // Verificamos si el campo es igual a una propiedad de GrupoComponent
     if (campo in this) {
-      (this as any)[campo] = ''; // Limpiamos el valor de la propiedad que coincide con el nombre del campo
+      (this as any)[campo] = '';
     }
   }
 }

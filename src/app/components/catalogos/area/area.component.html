@@ -2,7 +2,7 @@
   <h3>Área</h3>
 
   <div class="form-group">
-    <label for="idGrupo">ID Area:</label>
+    <label for="idGrupo">ID Área:</label>
     <input
       type="text"
       id="idGrupo"
@@ -24,4 +24,17 @@
   </div>
 
   <button class="btn" color="primary" (click)="buscarArea()">Buscar</button>
+</div>
+
+<!-- Modal -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-content">
+    <span class="close" (click)="cerrarModal()">&times;</span>
+    <h3>Resultados</h3>
+    <ul>
+      <li *ngFor="let area of areas">
+        ID: {{ area.Area_administrativa }} - Descripción: {{ area.Descripcion_area_administrativa }}
+      </li>
+    </ul>
+  </div>
 </div>

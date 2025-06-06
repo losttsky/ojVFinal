@@ -25,3 +25,25 @@
 
   <button class="btn" color="primary" (click)="buscarSubGrupo()">Buscar</button>
 </div>
+
+<!-- Modal emergente -->
+<div *ngIf="mostrarModal" class="modal-fondo">
+  <div class="modal-contenido">
+    <h4>Resultados SubGrupo</h4>
+    <table class="tabla-resultados">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sub of subgrupos">
+          <td>{{ sub.ID_SUBGRUPO }}</td>
+          <td>{{ sub.DESCRIPCION }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn" (click)="cerrarModal()">Cerrar</button>
+  </div>
+</div>

@@ -1,44 +1,74 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Para usar ngModel
+import { FormsModule } from '@angular/forms';
+import { TecnicosDelGITService } from '../../../services/tecnicos_del_git.service'; // Asegúrate de tenerlo
 
 @Component({
-  selector: 'app-tecnicos_del_git',
+  selector: 'app-tecnicos-del-git',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Importamos los módulos necesarios
-  templateUrl: './tecnicos_del_git.component.html', // HTML del componente
-  styleUrls: ['./tecnicos_del_git.component.css'], // Estilos del componente
+  imports: [CommonModule, FormsModule],
+  templateUrl: './tecnicos_del_git.component.html',
+  styleUrls: ['./tecnicos_del_git.component.css'],
 })
-export class TecnicosDelGITComponent {
-  // Variables para los campos del formulario
-  idGrupo: string = ''; // Correlativo
-  descripcion: string = ''; // Descripción
+export class TecnicosDelGITComponent implements OnInit {
+  tecnicos: any[] = [];
+  indiceActual: number = 0;
+  mostrarModal: boolean = false;
 
-  // Función para manejar la búsqueda (solo para demostración)
-  buscarGrupo() {
-    console.log('Buscar grupo con:', {
-      idGrupo: this.idGrupo,
-      descripcion: this.descripcion,
+  idGrupo: string = '';
+  descripcion: string = '';
+
+  constructor(private service: TecnicosDelGITService) {}
+
+  ngOnInit() {
+    this.service.obtenerTodos().subscribe((res) => {
+      this.tecnicos = res;
+      if (this.tecnicos.length > 0) {
+        this.mostrarDatos(this.indiceActual);
+      }
     });
-    // Aquí agregaríamos la lógica para consultar la base de datos o hacer una solicitud HTTP
   }
 
-  // Función para navegar al registro anterior
+  mostrarDatos(indice: number) {
+    const tecnico = this.tecnicos[indice];
+    this.idGrupo = tecnico.CORRELATIVO;
+    this.descripcion = tecnico.DESCRIPCION;
+  }
+
   anteriorRegistro() {
-    console.log('Navegar al registro anterior');
-    // Aquí agregaríamos la lógica para cargar el registro anterior
+    if (this.indiceActual > 0) {
+      this.indiceActual--;
+      this.mostrarDatos(this.indiceActual);
+    }
   }
 
-  // Función para navegar al siguiente registro
   siguienteRegistro() {
-    console.log('Navegar al siguiente registro');
-    // Aquí agregaríamos la lógica para cargar el siguiente registro
+    if (this.indiceActual < this.tecnicos.length - 1) {
+      this.indiceActual++;
+      this.mostrarDatos(this.indiceActual);
+    }
   }
 
-  // Función para limpiar el campo cuando se hace foco
+  buscarGrupo() {
+    const encontrado = this.tecnicos.findIndex(
+      (t) => t.CORRELATIVO.toString() === this.idGrupo.trim()
+    );
+    if (encontrado !== -1) {
+      this.indiceActual = encontrado;
+      this.mostrarDatos(encontrado);
+      this.mostrarModal = true;
+    } else {
+      alert('Técnico no encontrado');
+    }
+  }
+
+  cerrarModal() {
+    this.mostrarModal = false;
+  }
+
   limpiarCampo(campo: string) {
     if (campo in this) {
-      (this as any)[campo] = ''; // Limpiar el valor del campo
+      (this as any)[campo] = '';
     }
   }
 }
