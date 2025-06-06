@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const tecnicosDelGITService = require('../services/tecnicos_del_git.service');
+const tecnicosDelGITService = require('../services/tecnicos_del_gitService');
 
 // Ruta para obtener todos los técnicos del GIT
 router.get('/tecnicos_del_git', async (req, res) => {

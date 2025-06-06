@@ -6,10 +6,10 @@ async function buscarGrupo(id, descripcion) {
   const result = await conn.execute(
     `SELECT * FROM Tb_Grupos
      WHERE (:id IS NULL OR Codigo_Grupo = :id)
-     AND (:desc IS NULL OR LOWER(Descripcion_Grupo) LIKE '%' || LOWER(:desc) || '%')`,
+     AND (:descPattern IS NULL OR LOWER(Descripcion_Grupo) LIKE :descPattern)`,
     {
       id: id || null,
-      desc: descripcion || null,
+      descPattern: descripcion ? `%${descripcion.toLowerCase()}%` : null,
     },
     { outFormat: oracledb.OUT_FORMAT_OBJECT }
   );

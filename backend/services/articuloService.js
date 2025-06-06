@@ -46,54 +46,6 @@ exports.getNits = async (req, res) => {
   res.json(result.rows);
 };
 
-const db = require("../db");
-
-exports.getGrupos = async (req, res) => {
-  const result = await db.execute(`SELECT id_grupo, descripcion FROM grupo`);
-  res.json(result.rows);
-};
-
-exports.getSubgrupos = async (req, res) => {
-  const result = await db.execute(
-    `SELECT id_subgrupo, descripcion FROM subgrupo`
-  );
-  res.json(result.rows);
-};
-
-exports.getMedidas = async (req, res) => {
-  const result = await db.execute(`SELECT id_medida, descripcion FROM medidas`);
-  res.json(result.rows);
-};
-
-exports.getMarcas = async (req, res) => {
-  const result = await db.execute(`SELECT id_marca, descripcion FROM marca`);
-  res.json(result.rows);
-};
-
-exports.getModelos = async (req, res) => {
-  const result = await db.execute(`SELECT id_modelo, descripcion FROM modelos`);
-  res.json(result.rows);
-};
-
-exports.getEstadosDispositivo = async (req, res) => {
-  const result = await db.execute(
-    `SELECT id_estado, descripcion FROM estado_del_dispositivo`
-  );
-  res.json(result.rows);
-};
-
-exports.getTecnicos = async (req, res) => {
-  const result = await db.execute(
-    `SELECT id_tecnico, descripcion FROM tecnicos`
-  );
-  res.json(result.rows);
-};
-
-exports.getNits = async (req, res) => {
-  const result = await db.execute(`SELECT nit, nombre FROM proveedor`);
-  res.json(result.rows);
-};
-
 exports.ingresarArticulo = async (req, res) => {
   const a = req.body;
 

@@ -1,5 +1,5 @@
 const oracledb = require('oracledb');
-const dbConfig = require('../dbConfig');
+const dbConfig = require('../db');
 
 // Buscar artículos asociados al técnico
 async function obtenerArticulosPorMovimiento(anio, numero) {

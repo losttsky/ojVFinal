@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const articulosService = require('../services/articulosService');
+const articulosService = require('../services/articuloService');
 
 router.get('/grupos', articulosService.getGrupos);
 router.get('/subgrupos', articulosService.getSubgrupos);
