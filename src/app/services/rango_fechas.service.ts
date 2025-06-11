@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class ReporteResponsabilidadService {
-  private url = 'http://localhost:3000/reportes';
+  private url = 'http://localhost:3000/api/reportes';
 
   constructor(private http: HttpClient) {}
 
@@ -12,7 +12,7 @@ export class ReporteResponsabilidadService {
   }
 
   buscarPorSerie(serie: string) {
-  return this.http.post<any[]>(`http://localhost:3000/reportes/por-serie`, { serie });
+  return this.http.post<any[]>(`${this.url}/por-serie`, { serie });
 }
 
 

@@ -1,16 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const movimientosService = require('../services/movimientosESService');
+const movimientosService = require("../services/movimientosESService");
 
-// POST para guardar movimiento completo
-router.post('/guardar', async (req, res) => {
+router.post("/guardar", async (req, res) => {
   try {
-    const data = req.body;
-    await movimientosService.guardarMovimiento(data);
-    res.status(200).json({ message: 'Movimiento guardado correctamente' });
+    await movimientosService.guardarMovimiento(req.body);
+    res.status(200).json({ message: "Movimiento guardado correctamente" });
   } catch (error) {
-    console.error('Error al guardar movimiento:', error);
-    res.status(500).json({ error: 'Error al guardar movimiento' });
+    console.error("❌ Error al guardar movimiento:", error);
+    res.status(500).json({ error: "Error al guardar movimiento" });
   }
 });
 

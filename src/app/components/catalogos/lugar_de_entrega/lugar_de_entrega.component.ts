@@ -10,9 +10,10 @@ import { NgIf, NgFor } from '@angular/common';
   imports: [CommonModule, FormsModule, NgIf, NgFor],
   templateUrl: './lugar_de_entrega.component.html',
   styleUrls: ['./lugar_de_entrega.component.css'],
+  providers: [LugarEntregaService]
 })
 export class LugarEntregaComponent {
-  idGrupo: string = '';
+  idLugar: string = '';
   descripcion: string = '';
   lugares: any[] = [];
   mostrarModal = false;
@@ -20,10 +21,26 @@ export class LugarEntregaComponent {
   constructor(private lugarService: LugarEntregaService) {}
 
   buscarLugarEntrega() {
-    this.lugarService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
-      this.lugares = res;
-      this.mostrarModal = true;
-    });
+    // Si hay datos en el modal, los muestra, si no muestra un mensaje
+    if (this.idLugar || this.descripcion) {
+      this.lugarService
+        .buscar(this.idLugar, this.descripcion)
+        .subscribe((data: any) => {
+          this.lugares = data;
+          if (this.lugares.length > 0) {
+            this.mostrarModal = true;
+          } else {
+            alert(
+              'No se encontraron lugares de entrega con los criterios especificados.'
+            );
+          }
+        });
+    } else {
+      this.lugares = [];
+      alert(
+        'Por favor, ingrese un ID de lugar o una descripción para buscar.'
+      );
+    }
   }
 
   cerrarModal() {

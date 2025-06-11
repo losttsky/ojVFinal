@@ -6,7 +6,7 @@
     <input
       type="text"
       id="idGrupo"
-      [(ngModel)]="idGrupo"
+      [(ngModel)]="idModelo"
       placeholder="Ingresa el ID del Modelo"
       (focus)="limpiarCampo('idGrupo')"
     />
@@ -26,15 +26,15 @@
   <button class="btn" color="primary" (click)="buscarModelos()">Buscar</button>
 </div>
 
-<!-- Modal de resultados -->
+<!-- Modal -->
 <div class="modal" *ngIf="mostrarModal">
   <div class="modal-content">
-    <h4>Resultados</h4>
+    <span class="close" (click)="cerrarModal()">&times;</span>
+    <h3>Resultados</h3>
     <ul>
       <li *ngFor="let modelo of modelos">
-        {{ modelo.ID_MODELO }} - {{ modelo.DESCRIPCION_MODELO }}
+        ID: {{ modelo.codigo }} - Descripción: {{ modelo.descripcion }}
       </li>
     </ul>
-    <button (click)="cerrarModal()">Cerrar</button>
   </div>
 </div>

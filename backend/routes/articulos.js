@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const articulosService = require('../services/articuloService');
 
+router.get("/ultimo-codigo", articulosService.getUltimoCodigoArticulo);
 router.get('/grupos', articulosService.getGrupos);
 router.get('/subgrupos', articulosService.getSubgrupos);
 router.get('/medidas', articulosService.getMedidas);

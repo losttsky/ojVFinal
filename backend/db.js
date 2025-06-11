@@ -7,7 +7,7 @@ oracledb.initOracleClient({ libDir: 'C:\\instantclient_23_8' });
 const poolConfig = {
   user: 'system',
   password: 'lasi123',
-  connectString: '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SID=xe)))',
+  connectString: 'localhost:1521/xe',
   poolMin: 1,
   poolMax: 5,
 };

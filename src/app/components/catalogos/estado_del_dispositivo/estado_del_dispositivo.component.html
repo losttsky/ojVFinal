@@ -6,7 +6,7 @@
     <input
       type="text"
       id="idGrupo"
-      [(ngModel)]="idGrupo"
+      [(ngModel)]="idEstado"
       placeholder="Ingresa el ID del Estado del Dispositivo"
       (focus)="limpiarCampo('idGrupo')"
     />
@@ -25,16 +25,15 @@
 
   <button class="btn" (click)="buscarEstadoDispositivo()">Buscar</button>
 
-  <div class="modal" *ngIf="mostrarModal">
-    <div class="modal-content">
-      <span class="close" (click)="cerrarModal()">&times;</span>
-      <h3>Resultados:</h3>
-      <ul>
-        <li *ngFor="let estado of estados">
-          <strong>ID:</strong> {{ estado.ESTADO_DISPOSITIVO }} |
-          <strong>Descripción:</strong> {{ estado.DESCRIPCION_DISPOSITIVO }}
-        </li>
-      </ul>
-    </div>
+<!-- Modal -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-content">
+    <span class="close" (click)="cerrarModal()">&times;</span>
+    <h3>Resultados</h3>
+    <ul>
+      <li *ngFor="let estado of estados">
+        ID: {{ estado.codigo }} - Descripción: {{ estado.descripcion }}
+      </li>
+    </ul>
   </div>
 </div>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgFor } from '@angular/common';
-import { TecnicosService } from '../../../services/tecnicos.services';
+import { TecnicoService } from '../../../services/tecnicos.services';
 
 @Component({
   selector: 'app-tecnicos',
@@ -12,18 +12,34 @@ import { TecnicosService } from '../../../services/tecnicos.services';
   styleUrls: ['./tecnicos.component.css'],
 })
 export class TecnicosComponent {
-  idGrupo: string = '';
+  idTecnico: string = '';
   descripcion: string = '';
   tecnicos: any[] = [];
   mostrarModal = false;
 
-  constructor(private tecnicosService: TecnicosService) {}
+  constructor(private tecnicoService: TecnicoService) {}
 
   buscarTecnicos() {
-    this.tecnicosService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
-      this.tecnicos = res;
-      this.mostrarModal = true;
-    });
+    // Si hay datos los muestra, si no muestra un mensaje
+    if (this.idTecnico || this.descripcion) {
+      this.tecnicoService
+        .buscar(this.idTecnico, this.descripcion)
+        .subscribe((data: any) => {
+          this.tecnicos = data;
+          if (this.tecnicos.length > 0) {
+            this.mostrarModal = true;
+          } else {
+            alert(
+              'No se encontraron técnicos con los criterios especificados.'
+            );
+          }
+        });
+    } else {
+      this.tecnicos = [];
+      alert(
+        'Por favor, ingrese un ID de técnico o una descripción para buscar.'
+      );
+    }
   }
 
   cerrarModal() {

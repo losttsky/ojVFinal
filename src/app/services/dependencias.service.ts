@@ -12,11 +12,22 @@ export class DependenciasService {
     return this.http.get<any[]>(`${this.apiUrl}/departamentos`);
   }
 
-  getMunicipios(departamento: string): Observable<any[]> {
+  getMunicipios(departamento: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/municipios/${departamento}`);
   }
 
   guardarDependencia(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/guardar`, data);
+  }
+
+  buscarDependencias(
+    departamento: number | null,
+    municipio: number | null
+  ): Observable<any[]> {
+    let params: any = {};
+    if (departamento !== null) params.departamento = departamento;
+    if (municipio !== null) params.municipio = municipio;
+
+    return this.http.get<any[]>(`${this.apiUrl}/buscar`, { params });
   }
 }

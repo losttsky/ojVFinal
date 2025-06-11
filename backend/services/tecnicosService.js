@@ -1,7 +1,7 @@
 const { getConnection } = require("../db");
 const oracledb = require("oracledb");
 
-async function buscarMovimientos(id, descripcion) {
+async function buscarTecnicos(id, descripcion) {
   const conn = await getConnection();
 
   const idValue = id && id.trim() !== "" ? parseInt(id) : null;
@@ -10,15 +10,15 @@ async function buscarMovimientos(id, descripcion) {
       ? `%${descripcion.toLowerCase()}%`
       : null;
 
-  console.log("🧪 Parámetros:", { id: idValue, descPattern });
+/*   console.log("🧪 Parámetros:", { id: idValue, descPattern }); */
 
   const result = await conn.execute(
     `SELECT 
-       Codigo_movimiento AS "codigo",
-       Descripcion_movimiento AS "descripcion"
-     FROM Tb_tipo_movimientos
-     WHERE (:id IS NULL OR Codigo_movimiento = :id)
-     AND (:descPattern IS NULL OR LOWER(Descripcion_movimiento) LIKE :descPattern)`,
+       ID_TECNICO AS "codigo",
+       DESCRIPCION_TECNICO AS "descripcion"
+     FROM TB_TECNICO
+     WHERE (:id IS NULL OR ID_TECNICO = :id)
+     AND (:descPattern IS NULL OR LOWER(DESCRIPCION_TECNICO) LIKE :descPattern)`,
     {
       id: idValue,
       descPattern: descPattern,
@@ -30,4 +30,4 @@ async function buscarMovimientos(id, descripcion) {
   return result.rows;
 }
 
-module.exports = { buscarMovimientos };
+module.exports = { buscarTecnicos };

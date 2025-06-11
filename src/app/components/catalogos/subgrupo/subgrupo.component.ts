@@ -21,10 +21,22 @@ export class SubGrupoComponent {
   constructor(private subGrupoService: SubGrupoService) {}
 
   buscarSubGrupo() {
-    this.subGrupoService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
-      this.subgrupos = res;
-      this.mostrarModal = true;
-    });
+    //Si hay datos los muestra en el modal, si no muestra un mensaje
+    if (this.idGrupo || this.descripcion) {
+      this.subGrupoService
+        .buscar(this.idGrupo, this.descripcion)
+        .subscribe((data: any) => {
+          this.subgrupos = data;
+          if (this.subgrupos.length > 0) {
+            this.mostrarModal = true;
+          } else {
+            alert('No se encontraron subgrupos con los criterios especificados.');
+          }
+        });
+    } else {
+      this.subgrupos = [];
+      alert('Por favor, ingrese un ID de grupo o una descripción para buscar.');
+    }
   }
 
   cerrarModal() {

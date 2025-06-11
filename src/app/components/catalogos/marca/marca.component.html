@@ -6,7 +6,7 @@
     <input
       type="text"
       id="idGrupo"
-      [(ngModel)]="idGrupo"
+      [(ngModel)]="idMarca"
       placeholder="Ingresa el ID de la Marca"
       (focus)="limpiarCampo('idGrupo')"
     />
@@ -25,16 +25,15 @@
 
   <button class="btn" (click)="buscarMarca()">Buscar</button>
 
-  <div class="modal" *ngIf="mostrarModal">
-    <div class="modal-content">
-      <span class="close" (click)="cerrarModal()">&times;</span>
-      <h3>Resultados:</h3>
-      <ul>
-        <li *ngFor="let marca of marcas">
-          <strong>ID:</strong> {{ marca.ID_MARCA }} |
-          <strong>Descripción:</strong> {{ marca.DESCRIPCION_MARCA }}
-        </li>
-      </ul>
-    </div>
+<!-- Modal -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-content">
+    <span class="close" (click)="cerrarModal()">&times;</span>
+    <h3>Resultados</h3>
+    <ul>
+      <li *ngFor="let marca of marcas">
+        ID: {{ marca.codigo }} - Descripción: {{ marca.descripcion }}
+      </li>
+    </ul>
   </div>
 </div>

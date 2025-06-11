@@ -12,7 +12,7 @@ import { MarcaService } from '../../../services/marca.services';
   styleUrls: ['./marca.component.css'],
 })
 export class MarcaComponent {
-  idGrupo: string = '';
+  idMarca: string = '';
   descripcion: string = '';
   marcas: any[] = [];
   mostrarModal = false;
@@ -20,10 +20,24 @@ export class MarcaComponent {
   constructor(private marcaService: MarcaService) {}
 
   buscarMarca() {
-    this.marcaService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
-      this.marcas = res;
-      this.mostrarModal = true;
-    });
+    //Si hay datos en el modal, los muestra, si no muestra un mensaje
+    if (this.idMarca || this.descripcion) {
+      this.marcaService
+        .buscar(this.idMarca, this.descripcion)
+        .subscribe((data: any) => {
+          this.marcas = data;
+          if (this.marcas.length > 0) {
+            this.mostrarModal = true;
+          } else {
+            alert(
+              'No se encontraron marcas con los criterios especificados.'
+            );
+          }
+        });
+    } else {
+      this.marcas = [];
+      alert('Por favor, ingrese un ID de grupo o una descripción para buscar.');
+    }
   }
 
   cerrarModal() {

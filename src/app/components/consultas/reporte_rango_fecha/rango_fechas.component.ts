@@ -9,7 +9,7 @@ import { ReporteResponsabilidadService } from '../../../services/rango_fechas.se
   imports: [CommonModule, FormsModule],
   templateUrl: './rango_fechas.component.html',
   styleUrls: ['./rango_fechas.component.css'],
-  providers: [ReporteResponsabilidadService]
+  providers: [ReporteResponsabilidadService],
 })
 export class RangoFechasComponent {
   fechaInicio: string = '';
@@ -22,32 +22,49 @@ export class RangoFechasComponent {
 
   constructor(private reporteService: ReporteResponsabilidadService) {}
 
-buscarReportes() {
-  this.busquedaRealizada = true;
-  this.reporteService.obtenerReportes(this.fechaInicio, this.fechaFin).subscribe({
-    next: (data) => {
-      if (data.length === 0) {
-        alert('No se encontraron reportes en el rango de fechas');
-        return;
-      }
-
-      // Construir HTML dinámico
-      const html = this.generarHTML(data);
-      const ventana = window.open('', '_blank', 'width=1000,height=700');
-      if (ventana) {
-        ventana.document.open();
-        ventana.document.write(html);
-        ventana.document.close();
-      }
-    },
-    error: () => {
-      alert('❌ Error al obtener reportes');
+  buscarReportes() {
+    // Validaciones básicas
+    if (!this.fechaInicio || !this.fechaFin) {
+      alert('Por favor, seleccioná ambas fechas.');
+      return;
     }
-  });
-}
 
-generarHTML(reportes: any[]): string {
-  let html = `
+    if (this.fechaInicio > this.fechaFin) {
+      alert('La fecha de inicio no puede ser mayor que la fecha de fin.');
+      return;
+    }
+
+    this.busquedaRealizada = true;
+
+    this.reporteService
+      .obtenerReportes(this.fechaInicio, this.fechaFin)
+      .subscribe({
+        next: (data) => {
+          if (data.length === 0) {
+            alert('No se encontraron reportes en el rango de fechas');
+            return;
+          }
+
+          const html = this.generarHTML(data); // Ya incluye los estilos
+          const ventana = window.open('', '_blank', 'width=1000,height=700');
+
+          if (!ventana) {
+            alert('Por favor permite las ventanas emergentes en tu navegador.');
+            return;
+          }
+
+          ventana.document.open();
+          ventana.document.write(html);
+          ventana.document.close();
+        },
+        error: () => {
+          alert('❌ Error al obtener reportes');
+        },
+      });
+  }
+
+  generarHTML(reportes: any[]): string {
+    let html = `
   <html>
     <head>
       <title>Reportes de Responsabilidad</title>
@@ -62,8 +79,8 @@ generarHTML(reportes: any[]): string {
     <body>
       <h2>Organismo Judicial - Reportes de Responsabilidad</h2>`;
 
-  reportes.forEach((r, index) => {
-    html += `
+    reportes.forEach((r, index) => {
+      html += `
     <div class="reporte">
       <h3>Nota de Responsabilidad</h3>
       <p><strong>Ref:</strong> T-${r.referencia}</p>
@@ -88,8 +105,8 @@ generarHTML(reportes: any[]): string {
         </thead>
         <tbody>`;
 
-    r.articulos.forEach((art: any) => {
-      html += `
+      r.articulos.forEach((art: any) => {
+        html += `
           <tr>
             <td>${art.inventario}</td>
             <td>${art.cantidad}</td>
@@ -98,24 +115,24 @@ generarHTML(reportes: any[]): string {
             <td>${art.modelo}</td>
             <td>${art.serie}</td>
           </tr>`;
-    });
+      });
 
-    html += `
+      html += `
         </tbody>
       </table>
       <p><strong>Persona que entrega:</strong> ${r.persona_entrega}</p>
     </div>`;
+      
+      if (index < reportes.length - 1) {
+        html += `<hr><div class="page-break"></div>`;
+      }
+    });
 
-    if (index < reportes.length - 1) {
-      html += `<div class="page-break"></div>`;
-    }
-  });
-
-  html += `
+    html += `
     </body>
   </html>`;
-  return html;
-}
+    return html;
+  }
 
   cerrarModal() {
     this.mostrarModal = false;

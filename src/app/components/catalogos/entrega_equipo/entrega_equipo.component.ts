@@ -12,7 +12,7 @@ import { NgIf, NgFor } from '@angular/common';
   styleUrls: ['./entrega_equipo.component.css'],
 })
 export class EntregaEquipoComponent {
-  idGrupo: string = '';
+  idEntrega: string = '';
   descripcion: string = '';
   entregas: any[] = [];
   mostrarModal = false;
@@ -20,10 +20,26 @@ export class EntregaEquipoComponent {
   constructor(private entregaService: EntregaEquipoService) {}
 
   buscarEntregaEquipo() {
-    this.entregaService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
-      this.entregas = res;
-      this.mostrarModal = true;
-    });
+    // Si hay hay datos los muestra, si no muestra un mensaje
+    if (this.idEntrega || this.descripcion) {
+      this.entregaService
+        .buscar(this.idEntrega, this.descripcion)
+        .subscribe((data: any) => {
+          this.entregas = data;
+          if (this.entregas.length > 0) {
+            this.mostrarModal = true;
+          } else {
+            alert(
+              'No se encontraron entregas de equipo con los criterios especificados.'
+            );
+          }
+        });
+    } else {
+      this.entregas = [];
+      alert(
+        'Por favor, ingrese un ID de grupo o una descripción para buscar.'
+      );
+    }
   }
 
   cerrarModal() {

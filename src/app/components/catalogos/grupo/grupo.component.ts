@@ -20,10 +20,22 @@ export class GrupoComponent {
   constructor(private grupoService: GrupoService) {}
 
   buscarGrupo() {
-    this.grupoService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
-      this.grupos = res;
-      this.mostrarModal = true;
-    });
+    //Si hay datos los muestra en el modal, si no muestra un mensaje
+    if (this.idGrupo || this.descripcion) {
+      this.grupoService
+        .buscar(this.idGrupo, this.descripcion)
+        .subscribe((data: any) => {
+          this.grupos = data;
+          if (this.grupos.length > 0) {
+            this.mostrarModal = true;
+          } else {
+            alert('No se encontraron grupos con los criterios especificados.');
+          }
+        });
+    } else {
+      this.grupos = [];
+      alert('Por favor, ingrese un ID de grupo o una descripción para buscar.');
+    }
   }
 
   cerrarModal() {

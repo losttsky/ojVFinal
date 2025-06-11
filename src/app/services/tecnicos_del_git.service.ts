@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TecnicosDelGITService {
-  private apiUrl = 'http://localhost:3000/api/tecnicos_del_git';
+  private apiUrl = 'http://localhost:3000/api/tecnicosDelGit';
 
   constructor(private http: HttpClient) {}
 

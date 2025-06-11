@@ -12,7 +12,7 @@ import { NgIf, NgFor } from '@angular/common';
   styleUrls: ['./modelos.component.css'],
 })
 export class ModelosComponent {
-  idGrupo: string = '';
+  idModelo: string = '';
   descripcion: string = '';
   modelos: any[] = [];
   mostrarModal = false;
@@ -20,10 +20,24 @@ export class ModelosComponent {
   constructor(private modelosService: ModelosService) {}
 
   buscarModelos() {
-    this.modelosService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
-      this.modelos = res;
-      this.mostrarModal = true;
-    });
+    // Si hay datos en el modal, los muestra, si no muestra un mensaje
+    if (this.idModelo || this.descripcion) {
+      this.modelosService
+        .buscar(this.idModelo, this.descripcion)
+        .subscribe((data: any) => {
+          this.modelos = data;
+          if (this.modelos.length > 0) {
+            this.mostrarModal = true;
+          } else {
+            alert(
+              'No se encontraron modelos con los criterios especificados.'
+            );
+          }
+        });
+    } else {
+      this.modelos = [];
+      alert('Por favor, ingrese un ID de modelo o una descripción para buscar.');
+    }
   }
 
   cerrarModal() {

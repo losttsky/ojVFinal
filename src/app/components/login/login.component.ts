@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LoginService } from '../../services/login.service'; // 
 
 @Component({
   selector: 'app-login',
@@ -13,17 +14,20 @@ import { FormsModule } from '@angular/forms';
 export class LoginComponent {
   username: string = '';
   password: string = '';
-  errorMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private loginService: LoginService) {}
 
   login() {
-    if (this.username === 'admin' && this.password === 'password') {
-      localStorage.setItem('username', this.username); // Guarda el nombre de usuario
-      localStorage.setItem('loggedIn', 'true'); // Guarda la sesión
-      this.router.navigate(['/home']); // Redirige a la página principal
-    } else {
-      this.errorMessage = 'Usuario o contraseña incorrectos';
-    }
+    this.loginService.login(this.username.trim(), this.password.trim()).subscribe({
+      next: (res) => {
+        alert(`Bienvenido, ${res.DESCRIPCION_TECNICO}`);
+        localStorage.setItem('username', res.NOMBRE_USUARIO);
+        localStorage.setItem('loggedIn', 'true');
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        alert('❌ Usuario o contraseña incorrectos');
+      }
+    });
   }
 }

@@ -6,7 +6,7 @@
     <input
       type="text"
       id="idGrupo"
-      [(ngModel)]="idGrupo"
+      [(ngModel)]="idMedidas"
       placeholder="Ingresa el ID de las Medidas"
       (focus)="limpiarCampo('idGrupo')"
     />
@@ -25,16 +25,15 @@
 
   <button class="btn" (click)="buscarMedidas()">Buscar</button>
 
-  <div class="modal" *ngIf="mostrarModal">
-    <div class="modal-content">
-      <span class="close" (click)="cerrarModal()">&times;</span>
-      <h3>Resultados:</h3>
-      <ul>
-        <li *ngFor="let medida of medidas">
-          <strong>ID:</strong> {{ medida.ID_MEDIDA }} |
-          <strong>Descripción:</strong> {{ medida.DESCRIPCION_MEDIDA }}
-        </li>
-      </ul>
-    </div>
+<!-- Modal -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-content">
+    <span class="close" (click)="cerrarModal()">&times;</span>
+    <h3>Resultados</h3>
+    <ul>
+      <li *ngFor="let medida of medidas">
+        ID: {{ medida.codigo }} - Descripción: {{ medida.descripcion }}
+      </li>
+    </ul>
   </div>
 </div>

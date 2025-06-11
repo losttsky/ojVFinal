@@ -6,7 +6,7 @@
     <input
       type="text"
       id="idGrupo"
-      [(ngModel)]="idGrupo"
+      [(ngModel)]="idLugar"
       placeholder="Ingresa el ID del lugar de entrega"
       (focus)="limpiarCampo('idGrupo')"
     />
@@ -25,16 +25,15 @@
 
   <button class="btn" (click)="buscarLugarEntrega()">Buscar</button>
 
-  <div class="modal" *ngIf="mostrarModal">
-    <div class="modal-content">
-      <span class="close" (click)="cerrarModal()">&times;</span>
-      <h3>Resultados:</h3>
-      <ul>
-        <li *ngFor="let lugar of lugares">
-          <strong>ID:</strong> {{ lugar.CODIGO_LUGAR_ENTREGA }} |
-          <strong>Descripción:</strong> {{ lugar.DESCRIPCION_LUGAR_ENTREGA }}
-        </li>
-      </ul>
-    </div>
+<!-- Modal -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-content">
+    <span class="close" (click)="cerrarModal()">&times;</span>
+    <h3>Resultados</h3>
+    <ul>
+      <li *ngFor="let lugar of lugares">
+        ID: {{ lugar.codigo }} - Descripción: {{ lugar.descripcion }}
+      </li>
+    </ul>
   </div>
 </div>

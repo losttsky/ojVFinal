@@ -95,6 +95,7 @@ export class BusquedaPorSerieComponent {
         </table>
         <p><strong>Persona que entrega:</strong> ${r.persona_entrega}</p>
       </body>
+      <hr>
     </html>`;
   }
 }

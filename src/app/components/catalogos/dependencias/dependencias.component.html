@@ -2,14 +2,27 @@
   <!-- Campo Nombre -->
   <div class="form-group">
     <label for="idDependencia">Nombre: </label>
-    <input id="idDependencia" class="input_nombre" type="text" [(ngModel)]="idDependencia" placeholder="Ingresa el nombre">
+    <input
+      id="idDependencia"
+      class="input_nombre"
+      type="text"
+      [(ngModel)]="idDependencia"
+      placeholder="Ingresa el nombre"
+    />
   </div>
 
   <!-- Dropdown de Departamento -->
   <div class="form-group">
     <label for="departamento">Departamento:</label>
-    <select id="departamento" class="drop_depto" [(ngModel)]="departamento" (change)="onDepartamentoChange()">
-      <option *ngFor="let dep of departamentos" [value]="dep">{{ dep }}</option>
+    <select
+      id="departamento"
+      class="drop_depto"
+      [(ngModel)]="departamento"
+      (change)="onDepartamentoChange()"
+    >
+      <option *ngFor="let dep of departamentos" [value]="dep.DEPARTAMENTO">
+        {{ dep.nombreDepartamento }}
+      </option>
     </select>
   </div>
 
@@ -17,14 +30,22 @@
   <div class="form-group">
     <label for="municipio">Municipio:</label>
     <select id="municipio" class="drop_municipio" [(ngModel)]="municipio">
-      <option *ngFor="let mun of municipios" [value]="mun">{{ mun }}</option>
+      <option *ngFor="let mun of municipios" [value]="mun.MUNICIPIO">
+        {{ mun.NOMBREMUNICIPIO }}
+      </option>
     </select>
   </div>
 
   <!-- Campo Dirección -->
   <div class="form-group">
     <label for="direccion">Dirección: </label>
-    <input id="direccion" type="text" class="input_direccion" [(ngModel)]="direccion" placeholder="Ingresa la dirección">
+    <input
+      id="direccion"
+      type="text"
+      class="input_direccion"
+      [(ngModel)]="direccion"
+      placeholder="Ingresa la dirección"
+    />
   </div>
 
   <!-- Botones -->
@@ -32,4 +53,21 @@
     <button (click)="guardarDependencia()">Guardar</button>
   </div>
 </div>
+
+<!-- Botón para buscar -->
+<button (click)="buscarDependencias()">Buscar Dependencias</button>
+
+<!-- Mostrar resultados -->
+<div *ngIf="mostrarModal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="cerrarModal()">&times;</span>
+    <h4>Resultados:</h4>
+    <ul>
+      <li *ngFor="let d of resultados">
+        {{ d.NOMBRE_DEPENDENCIA }} - {{ d.DIRECCION }}
+      </li>
+    </ul>
+  </div>
+</div>
+
 

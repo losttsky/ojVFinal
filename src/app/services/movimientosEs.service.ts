@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class MovimientosESService {
-  private url = 'http://localhost:3000/movimientos/guardar';
+  private url = 'http://localhost:3000/api/movimientosEs/guardar';
 
   constructor(private http: HttpClient) {}
 

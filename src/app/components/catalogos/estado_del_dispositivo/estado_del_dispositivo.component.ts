@@ -12,7 +12,7 @@ import { NgIf, NgFor } from '@angular/common';
   styleUrls: ['./estado_del_dispositivo.component.css'],
 })
 export class EstadoDispositivoComponent {
-  idGrupo: string = '';
+  idEstado: string = '';
   descripcion: string = '';
   estados: any[] = []; // Resultados
   mostrarModal = false;
@@ -20,10 +20,26 @@ export class EstadoDispositivoComponent {
   constructor(private estadoService: EstadoDispositivoService) {}
 
   buscarEstadoDispositivo() {
-    this.estadoService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
-      this.estados = res;
-      this.mostrarModal = true;
-    });
+    // Si hay datos los muestra, si no muestra un mensaje
+    if (this.idEstado || this.descripcion) {
+      this.estadoService
+        .buscar(this.idEstado, this.descripcion)
+        .subscribe((data: any) => {
+          this.estados = data;
+          if (this.estados.length > 0) {
+            this.mostrarModal = true;
+          } else {
+            alert(
+              'No se encontraron estados de dispositivo con los criterios especificados.'
+            );
+          }
+        });
+    } else {
+      this.estados = [];
+      alert(
+        'Por favor, ingrese un ID de estado o una descripción para buscar.'
+      );
+    }
   }
 
   cerrarModal() {

@@ -9,6 +9,7 @@ import { TecnicosDelGITService } from '../../../services/tecnicos_del_git.servic
   imports: [CommonModule, FormsModule],
   templateUrl: './tecnicos_del_git.component.html',
   styleUrls: ['./tecnicos_del_git.component.css'],
+  providers: [TecnicosDelGITService],
 })
 export class TecnicosDelGITComponent implements OnInit {
   tecnicos: any[] = [];
@@ -23,15 +24,12 @@ export class TecnicosDelGITComponent implements OnInit {
   ngOnInit() {
     this.service.obtenerTodos().subscribe((res) => {
       this.tecnicos = res;
-      if (this.tecnicos.length > 0) {
-        this.mostrarDatos(this.indiceActual);
-      }
     });
   }
 
   mostrarDatos(indice: number) {
     const tecnico = this.tecnicos[indice];
-    this.idGrupo = tecnico.CORRELATIVO;
+    this.idGrupo = tecnico.CORRELATIVO; // ← es el número de movimiento
     this.descripcion = tecnico.DESCRIPCION;
   }
 
@@ -50,14 +48,19 @@ export class TecnicosDelGITComponent implements OnInit {
   }
 
   buscarGrupo() {
+    const idBuscado = String(this.idGrupo).trim();
+
     const encontrado = this.tecnicos.findIndex(
-      (t) => t.CORRELATIVO.toString() === this.idGrupo.trim()
+      (t) => String(t.CORRELATIVO) === idBuscado
     );
+
     if (encontrado !== -1) {
       this.indiceActual = encontrado;
       this.mostrarDatos(encontrado);
       this.mostrarModal = true;
     } else {
+      this.descripcion = '';
+      this.mostrarModal = false;
       alert('Técnico no encontrado');
     }
   }

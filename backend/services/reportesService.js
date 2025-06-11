@@ -1,16 +1,27 @@
 const oracledb = require("oracledb");
-const dbConfig = require("../db");
+const { getConnection } = require("../db");
 
 async function obtenerReportesResponsabilidad(fechaInicio, fechaFin) {
-  const conn = await oracledb.getConnection(dbConfig);
+  console.log("📅 Fechas recibidas en backend:", fechaInicio, fechaFin);
+  const conn = await getConnection();
   try {
     const enc = await conn.execute(
       `SELECT 
-        anio_movimiento, num_movimiento, TO_CHAR(fecha_operacion, 'YYYY-MM-DD') AS fecha,
-        dependencia, departamento, municipio, tecnico_entrego AS tecnico,
-        usuario_recibio AS persona_entrega
-       FROM Tb_Movimientos_Enc
-       WHERE fecha_operacion BETWEEN TO_DATE(:inicio, 'YYYY-MM-DD') AND TO_DATE(:fin, 'YYYY-MM-DD')`,
+    e.año_movimiento,
+    e.num_movimiento,
+    TO_CHAR(e.fecha_operacion, 'YYYY-MM-DD') AS fecha,
+    e.dependencia,
+    d."nombreDepartamento" AS departamento,
+    m.NOMBREMUNICIPIO AS municipio,
+    t.DESCRIPCION_TECNICO AS tecnico,
+    e.usuario_recibio AS persona_entrega,
+    e.nombre_descargo,
+    e.lugar_descargo
+   FROM Tb_Movimientos_Enc e
+   LEFT JOIN DEPARTAMENTOS d ON d.DEPARTAMENTO = e.DEPARTAMENTO
+   LEFT JOIN MUNICIPIOS m ON m.MUNICIPIO = e.MUNICIPIO
+   LEFT JOIN TB_TECNICO t ON t.ID_TECNICO = e.TECNICO_ENTREGO
+   WHERE e.fecha_operacion BETWEEN TO_DATE(:inicio, 'YYYY-MM-DD') AND TO_DATE(:fin, 'YYYY-MM-DD')`,
       { inicio: fechaInicio, fin: fechaFin },
       { outFormat: oracledb.OUT_FORMAT_OBJECT }
     );
@@ -19,19 +30,35 @@ async function obtenerReportesResponsabilidad(fechaInicio, fechaFin) {
     for (const row of enc.rows) {
       const detalles = await conn.execute(
         `SELECT 
-          descripcion AS inventario, cantidad, descripcion AS dispositivo,
-          marca, modelo, serie
-         FROM Tb_Movimientos_Det d
-         JOIN Tb_Articulos a ON a.codigo_articulo = d.codigo_articulo AND a.codigo_grupo = d.codigo_grupo AND a.codigo_subgrupo = d.codigo_subgrupo
-         WHERE d.anio_movimiento = :anio AND d.num_movimiento = :num`,
-        { anio: row.ANIO_MOVIMIENTO, num: row.NUM_MOVIMIENTO },
+    a.descripcion_articulo AS inventario, 
+    d.cantidad, 
+    a.descripcion_articulo AS dispositivo,
+    a.marca, 
+    a.modelo, 
+    a.serie
+   FROM Tb_Movimientos_Det d
+   JOIN Tb_Articulos a 
+     ON a.codigo_articulo = d.codigo_articulo 
+     AND a.codigo_grupo = d.codigo_grupo 
+     AND a.codigo_subgrupo = d.codigo_subgrupo
+   WHERE d.año_movimiento = :año AND d.num_movimiento = :num`,
+        { año: row.AÑO_MOVIMIENTO, num: row.NUM_MOVIMIENTO },
         { outFormat: oracledb.OUT_FORMAT_OBJECT }
       );
 
+      const rowData = Object.fromEntries(
+        Object.entries(row).map(([k, v]) => [k.toLowerCase(), v])
+      );
+      const detalleData = detalles.rows.map((a) =>
+        Object.fromEntries(
+          Object.entries(a).map(([k, v]) => [k.toLowerCase(), v])
+        )
+      );
+
       resultados.push({
-        ...row,
-        referencia: `${row.NUM_MOVIMIENTO}-${row.ANIO_MOVIMIENTO}`,
-        articulos: detalles.rows,
+        ...rowData,
+        referencia: `${rowData.num_movimiento}-${rowData.año_movimiento}`,
+        articulos: detalleData,
       });
     }
 
@@ -42,17 +69,27 @@ async function obtenerReportesResponsabilidad(fechaInicio, fechaFin) {
 }
 
 async function obtenerPorSerie(serie) {
-  const conn = await oracledb.getConnection(dbConfig);
+  const conn = await getConnection();
 
   try {
     const enc = await conn.execute(
       `SELECT 
-        e.anio_movimiento, e.num_movimiento, TO_CHAR(e.fecha_operacion, 'YYYY-MM-DD') AS fecha,
-        e.dependencia, e.departamento, e.municipio, e.tecnico_entrego AS tecnico,
-        e.usuario_recibio AS persona_entrega
+        e.año_movimiento,
+        e.num_movimiento,
+        TO_CHAR(e.fecha_operacion, 'YYYY-MM-DD') AS fecha,
+        e.dependencia,
+        dept."nombreDepartamento" AS departamento,
+        m.NOMBREMUNICIPIO AS municipio,
+        t.DESCRIPCION_TECNICO AS tecnico,
+        e.usuario_recibio AS persona_entrega,
+        e.nombre_descargo,
+        e.lugar_descargo
        FROM Tb_Movimientos_Enc e
-       JOIN Tb_Movimientos_Det d ON d.anio_movimiento = e.anio_movimiento AND d.num_movimiento = e.num_movimiento
+       JOIN Tb_Movimientos_Det d ON d.año_movimiento = e.año_movimiento AND d.num_movimiento = e.num_movimiento
        JOIN Tb_Articulos a ON a.codigo_articulo = d.codigo_articulo AND a.codigo_grupo = d.codigo_grupo AND a.codigo_subgrupo = d.codigo_subgrupo
+       LEFT JOIN DEPARTAMENTOS dept ON dept.DEPARTAMENTO = e.DEPARTAMENTO
+       LEFT JOIN MUNICIPIOS m ON m.MUNICIPIO = e.MUNICIPIO
+       LEFT JOIN TB_TECNICO t ON t.ID_TECNICO = e.TECNICO_ENTREGO
        WHERE a.serie = :serie`,
       { serie },
       { outFormat: oracledb.OUT_FORMAT_OBJECT }
@@ -64,20 +101,33 @@ async function obtenerPorSerie(serie) {
 
     const detalles = await conn.execute(
       `SELECT 
-        descripcion AS inventario, cantidad, descripcion AS dispositivo,
-        marca, modelo, serie
+        a.descripcion_articulo AS inventario,
+        d.cantidad,
+        a.descripcion_articulo AS dispositivo,
+        a.marca,
+        a.modelo,
+        a.serie
        FROM Tb_Movimientos_Det d
        JOIN Tb_Articulos a ON a.codigo_articulo = d.codigo_articulo AND a.codigo_grupo = d.codigo_grupo AND a.codigo_subgrupo = d.codigo_subgrupo
-       WHERE d.anio_movimiento = :anio AND d.num_movimiento = :num AND a.serie = :serie`,
-      { anio: row.ANIO_MOVIMIENTO, num: row.NUM_MOVIMIENTO, serie },
+       WHERE d.año_movimiento = :año AND d.num_movimiento = :num AND a.serie = :serie`,
+      { año: row.AÑO_MOVIMIENTO, num: row.NUM_MOVIMIENTO, serie },
       { outFormat: oracledb.OUT_FORMAT_OBJECT }
+    );
+
+    const rowData = Object.fromEntries(
+      Object.entries(row).map(([k, v]) => [k.toLowerCase(), v])
+    );
+    const detalleData = detalles.rows.map((a) =>
+      Object.fromEntries(
+        Object.entries(a).map(([k, v]) => [k.toLowerCase(), v])
+      )
     );
 
     return [
       {
-        ...row,
-        referencia: `${row.NUM_MOVIMIENTO}-${row.ANIO_MOVIMIENTO}`,
-        articulos: detalles.rows,
+        ...rowData,
+        referencia: `${rowData.num_movimiento}-${rowData.año_movimiento}`,
+        articulos: detalleData,
       },
     ];
   } finally {

@@ -20,10 +20,22 @@ export class AreaComponent {
   constructor(private areaService: AreaService) {}
 
   buscarArea() {
-    this.areaService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
-      this.areas = res;
-      this.mostrarModal = true;
-    });
+    //Si hay datos los muestra en el modal, si no muestra un mensaje
+    if (this.idGrupo || this.descripcion) {
+      this.areaService
+        .buscar(this.idGrupo, this.descripcion)
+        .subscribe((data: any) => {
+          this.areas = data; // Asigna los datos recibidos a la lista de áreas
+          if (this.areas.length > 0) {
+            this.mostrarModal = true; // Muestra el modal si hay áreas encontradas
+          } else {
+            alert('No se encontraron áreas con los criterios especificados.');
+          }
+        });
+    } else {
+      this.areas = []; // Limpia la lista de áreas si no hay criterios de búsqueda
+      alert('Por favor, ingrese un ID de grupo o una descripción para buscar.');
+    }
   }
 
   cerrarModal() {

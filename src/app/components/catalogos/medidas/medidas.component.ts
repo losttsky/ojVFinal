@@ -12,7 +12,7 @@ import { MedidasService } from '../../../services/medidas.service';
   styleUrls: ['./medidas.component.css'],
 })
 export class MedidasComponent {
-  idGrupo: string = '';
+  idMedidas: string = '';
   descripcion: string = '';
   medidas: any[] = [];
   mostrarModal = false;
@@ -20,10 +20,24 @@ export class MedidasComponent {
   constructor(private medidasService: MedidasService) {}
 
   buscarMedidas() {
-    this.medidasService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
-      this.medidas = res;
-      this.mostrarModal = true;
-    });
+    // Si hay datos en el modal, los muestra, si no muestra un mensaje
+    if (this.idMedidas || this.descripcion) {
+      this.medidasService
+        .buscar(this.idMedidas, this.descripcion)
+        .subscribe((data: any) => {
+          this.medidas = data;
+          if (this.medidas.length > 0) {
+            this.mostrarModal = true;
+          } else {
+            alert(
+              'No se encontraron medidas con los criterios especificados.'
+            );
+          }
+        });
+    } else {
+      this.medidas = [];
+      alert('Por favor, ingrese un ID de grupo o una descripción para buscar.');
+    }
   }
 
   cerrarModal() {

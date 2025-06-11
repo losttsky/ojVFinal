@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class TecnicosService {
-  private apiUrl = 'http://localhost:3000/tecnicos';
+export class TecnicoService {
+  private apiUrl = 'http://localhost:3000/api/tecnico';
 
   constructor(private http: HttpClient) {}
 
-  buscar(id: string, descripcion: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}?id=${id}&descripcion=${descripcion}`);
+  buscar(id: string, descripcion: string): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl, {
+      params: { id, descripcion },
+    });
   }
 }

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class EstadoDispositivoService {
-  private apiUrl = 'http://localhost:3000/api/estado_dispositivo';
+  private apiUrl = 'http://localhost:3000/api/estadoDispositivo';
 
   constructor(private http: HttpClient) {}
 

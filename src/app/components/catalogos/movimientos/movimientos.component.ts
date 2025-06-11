@@ -20,10 +20,24 @@ export class MovimientosComponent {
   constructor(private movimientosService: MovimientosService) {}
 
   buscarMovimientos() {
-    this.movimientosService.buscar(this.idGrupo, this.descripcion).subscribe((res) => {
-      this.movimientos = res;
-      this.mostrarModal = true;
-    });
+    //Si hay datos los muestra en el modal, si no muestra un mensaje
+    if (this.idGrupo || this.descripcion) {
+      this.movimientosService
+        .buscar(this.idGrupo, this.descripcion)
+        .subscribe((data: any) => {
+          this.movimientos = data;
+          if (this.movimientos.length > 0) {
+            this.mostrarModal = true;
+          } else {
+            alert(
+              'No se encontraron movimientos con los criterios especificados.'
+            );
+          }
+        });
+    } else {
+      this.movimientos = [];
+      alert('Por favor, ingrese un ID de grupo o una descripción para buscar.');
+    }
   }
 
   cerrarModal() {

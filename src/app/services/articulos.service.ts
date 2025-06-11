@@ -7,6 +7,10 @@ export class ArticulosService {
 
   constructor(private http: HttpClient) {}
 
+  getUltimoCodigoArticulo() {
+    return this.http.get(`${this.apiUrl}/ultimo-codigo`);
+  }
+
   getGrupos() {
     return this.http.get(`${this.apiUrl}/grupos`);
   }
@@ -27,8 +31,8 @@ export class ArticulosService {
     return this.http.get(`${this.apiUrl}/modelos`);
   }
 
-  getEstados(){
-    return this.http.get(`${this.apiUrl}/estados-dispositivo`)
+  getEstados() {
+    return this.http.get(`${this.apiUrl}/estados-dispositivo`);
   }
 
   getTecnicos() {
