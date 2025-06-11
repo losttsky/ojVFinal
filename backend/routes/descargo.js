@@ -28,4 +28,14 @@ router.post('/actualizar', async (req, res) => {
   }
 });
 
+router.get("/ultimo-movimiento", async (req, res) => {
+  try {
+    const movimiento = await descargoService.obtenerUltimoMovimiento();
+    res.json(movimiento);
+  } catch (error) {
+    console.error("❌ Error al obtener último movimiento:", error);
+    res.status(500).json({ error: "Error al obtener último movimiento" });
+  }
+});
+
 module.exports = router;

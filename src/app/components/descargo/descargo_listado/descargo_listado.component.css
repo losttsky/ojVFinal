@@ -118,6 +118,22 @@ table td input[type="checkbox"] {
   margin-left: 10px;
 }
 
+.info-desligados {
+  margin-top: 20px;
+  background: #eef5f9;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.desligado-box {
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-left: 5px solid #28a745;
+}
+
+
 /* Responsivo: En pantallas pequeñas, las filas del formulario se ajustan */
 @media (max-width: 600px) {
   .formulario {
@@ -129,3 +145,5 @@ table td input[type="checkbox"] {
     min-width: 100%;
   }
 }
+
+

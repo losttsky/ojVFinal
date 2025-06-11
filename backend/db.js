@@ -3,16 +3,15 @@ const oracledb = require('oracledb');
 // Inicializa el cliente solo una vez
 oracledb.initOracleClient({ libDir: 'C:\\instantclient_23_8' });
 
-// Configuración del pool
 const poolConfig = {
   user: 'system',
   password: 'lasi123',
-  connectString: 'localhost:1521/xe',
+  connectString: 'localhost:1521/XE',  
   poolMin: 1,
   poolMax: 5,
 };
 
-let pool; // solo se crea una vez
+let pool;
 
 async function getConnection() {
   if (!pool) {
@@ -22,7 +21,6 @@ async function getConnection() {
   return await pool.getConnection();
 }
 
-// Función de prueba para verificar la conexión
 async function probarConexion() {
   try {
     const connection = await getConnection();
