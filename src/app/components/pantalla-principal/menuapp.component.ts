@@ -10,6 +10,9 @@ import { DialogConfirmacionComponent } from './app.component_dailog_confirmation
 //Importamos la pantalla default
 import { DefaultComponent } from '../default/default.component';
 
+// Importamos los submenús de Admin Tools
+import { CrearUsuarioComponent } from '../admin_tools/crearUsuario.component';
+
 // Importamos los submenús de Catalogos
 import { GrupoComponent } from '../catalogos/grupo/grupo.component';
 import { SubGrupoComponent } from '../catalogos/subgrupo/subgrupo.component';
@@ -41,11 +44,11 @@ import { BusquedaPorSerieComponent } from '../consultas/busqueda_por_serie/busqu
 @Component({
   selector: 'app-pantalla-principal',
   standalone: true,
-    imports: [
+  imports: [
     CommonModule,
-    FormsModule,      // para [(ngModel)]
-    RouterModule,     // si usas routerLink o navegaciones
-    MatDialogModule,  // para abrir diálogos
+    FormsModule, // para [(ngModel)]
+    RouterModule, // si usas routerLink o navegaciones
+    MatDialogModule, // para abrir diálogos
   ],
   templateUrl: './menuapp.component.html',
   styleUrls: ['./menuapp.component.css'],
@@ -63,7 +66,9 @@ export class MenuAppComponent {
   // Título del submenu actual
   submenuTitulo: string = '';
 
-  //Cargar componente por defecto 
+  rol: string | null = localStorage.getItem('rol');
+
+  //Cargar componente por defecto
   submenuSeleccionado: Type<any> = DefaultComponent;
 
   constructor(private dialog: MatDialog, private router: Router) {}
@@ -76,11 +81,22 @@ export class MenuAppComponent {
   // Maneja la selección de módulos principales y carga los submenús correspondientes
   seleccionarSubmenu(nombre: string) {
     this.mostrarBarra = false;
+    // verifica el rol del usuario almacenado en localStorage
 
     // Carga el componente Seleccionado segun el nombre del submenú
     switch (nombre) {
       case 'Inicio':
         this.submenuSeleccionado = DefaultComponent;
+        break;
+      case 'Crear Usuario':
+        if (this.rol !== 'SuperUsuario') {
+          alert('⛔ No tienes permiso para acceder a esta sección.');
+          this.submenuSeleccionado = DefaultComponent;
+          this.submenuTitulo = 'Inicio';
+          this.mostrarSubmenu = true;
+          return;
+        }
+        this.submenuSeleccionado = CrearUsuarioComponent;
         break;
       case 'Grupo':
         this.submenuSeleccionado = GrupoComponent;
@@ -116,6 +132,17 @@ export class MenuAppComponent {
         this.submenuSeleccionado = TecnicosComponent;
         break;
       case 'Dependencias':
+        // Verifica el rol del usuario antes de permitir el acceso
+        /* switch (rol) {
+          case 'Operador':
+            return accesoDenegado();
+          case 'tecnico-administrador':
+            return accesoDenegado();
+          case 'SuperUsuario':
+            this.submenuSeleccionado = DependenciasComponent;
+            break;
+        } */
+        // Si el rol no es ninguno de los anteriores, no se carga el componente
         this.submenuSeleccionado = DependenciasComponent;
         break;
       case 'Técnicos del GIT':
@@ -162,6 +189,7 @@ export class MenuAppComponent {
   }
 
   // Submenús por categoría
+  adminTools = ['Crear Usuario'];
   catalogos = [
     'Grupo',
     'Subgrupo',
@@ -178,9 +206,7 @@ export class MenuAppComponent {
     'Técnicos del GIT',
   ];
   ingresoArticulos = ['Artículos'];
-  Movimientos = [
-    'Movimientos de Entrada y Salida'
-  ];
+  Movimientos = ['Movimientos de Entrada y Salida'];
   descargo = ['Descargo por Listado'];
   consultas = ['Reportes por Rango de Fecha', 'Búsqueda por Serie'];
 }

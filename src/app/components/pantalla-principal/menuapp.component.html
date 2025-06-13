@@ -4,7 +4,12 @@
     <h1>Hoja de responsabilidades</h1>
     <button class="boton-barra" (click)="toggleBarra()">Menú</button>
     <div class="img_logo">
-      <a (click)="seleccionarSubmenu('Inicio')"><img src="assets/img/logo2.png" alt="Logo Organismo Judicial" class="logo" /></a>
+      <a (click)="seleccionarSubmenu('Inicio')"
+        ><img
+          src="assets/img/logo2.png"
+          alt="Logo Organismo Judicial"
+          class="logo"
+      /></a>
     </div>
   </div>
 
@@ -22,6 +27,16 @@
         Inicio
       </button>
 
+      <!-- Botón solo visible para SuperUsuario -->
+      <h3 class="seccion-titulo" *ngIf="rol === 'SuperUsuario'">Tools</h3>
+      <button
+        *ngIf="rol === 'SuperUsuario'"
+        (click)="seleccionarSubmenu('Crear Usuario')"
+        class="submenu-btn"
+      >
+        Crear Usuario
+      </button>
+
       <!-- Título: Catálogos -->
       <h3 class="seccion-titulo">Catálogos</h3>
       <button
@@ -33,14 +48,31 @@
       </button>
 
       <!-- Título: Ingreso Artículos -->
-      <h3 class="seccion-titulo">Ingreso Artículos</h3>
-      <button
-        *ngFor="let item of ingresoArticulos"
-        (click)="seleccionarSubmenu(item)"
-        class="submenu-btn"
+      <h3
+        class="seccion-titulo"
+        *ngIf="
+          rol === 'SuperUsuario' ||
+          rol === 'Administrador' ||
+          rol === 'tecnico-administrador'
+        "
       >
-        {{ item }}
-      </button>
+        Ingreso Artículos
+      </h3>
+      <ng-container
+        *ngIf="
+          rol === 'SuperUsuario' ||
+          rol === 'Administrador' ||
+          rol === 'tecnico-administrador'
+        "
+      >
+        <button
+          *ngFor="let item of ingresoArticulos"
+          (click)="seleccionarSubmenu(item)"
+          class="submenu-btn"
+        >
+          {{ item }}
+        </button>
+      </ng-container>
 
       <!-- Título: Movimientos -->
       <h3 class="seccion-titulo">Movimientos</h3>
@@ -82,7 +114,7 @@
     </ng-container>
   </div>
 </div>
-  <!-- Footer -->
+<!-- Footer -->
 <!--   <div class="footer">
     <p>© 2025 Gerencia de Informática</p>
   </div> -->

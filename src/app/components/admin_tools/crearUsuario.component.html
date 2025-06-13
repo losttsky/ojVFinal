@@ -1,0 +1,17 @@
+<div class="form-container">
+  <h2>Crear Nuevo Usuario</h2>
+
+  <label>Nombre de Usuario:</label>
+  <input [(ngModel)]="nombreUsuario" type="text" placeholder="Ingrese nombre de usuario" />
+
+  <label>Contraseña:</label>
+  <input [(ngModel)]="password" type="password" placeholder="Ingrese contraseña" />
+
+  <label>Rol:</label>
+  <select [(ngModel)]="rol">
+    <option value="">Seleccione un rol</option>
+    <option *ngFor="let r of rolesDisponibles" [value]="r">{{ r }}</option>
+  </select>
+
+  <button (click)="crearUsuario()">Crear Usuario</button>
+</div>

@@ -5,12 +5,16 @@ const loginService = require("../services/loginService");
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
 
+  console.log("📥 Datos recibidos desde frontend:");
+  console.log("📥 username:", `"${username}"`);
+  console.log("📥 password:", `"${password}"`);
+
   try {
     const user = await loginService.validarUsuario(username, password);
     if (user) {
-      res.status(200).json(user);
+      res.status(200).json(user); 
     } else {
-      res.status(401).json({ mensaje: "Credenciales inválidas" });
+      res.status(401).json({ mensaje: "Credenciales inválidas" }); 
     }
   } catch (error) {
     console.error("❌ Error en login:", error);

@@ -22,6 +22,7 @@ const descargoRoutes = require("./routes/descargo");
 const reportesRoutes = require("./routes/reportes");
 const tecnicosRoutes = require("./routes/tecnicos");
 const loginRoutes = require("./routes/login");
+const crearUsuarioRoutes = require("./routes/crearUsuario");
 
 const { getConnection } = require("./db"); 
 
@@ -51,6 +52,7 @@ app.use('/api/descargo', descargoRoutes);
 app.use('/api/reportes', reportesRoutes);
 app.use('/api/tecnico', tecnicosRoutes);
 app.use('/api/login', loginRoutes);
+app.use('/api/usuarios', crearUsuarioRoutes);
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor backend en http://localhost:${PORT}`);

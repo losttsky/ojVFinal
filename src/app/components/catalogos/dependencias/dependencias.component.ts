@@ -42,23 +42,41 @@ export class DependenciasComponent implements OnInit {
       this.municipios = [];
     }
   }
+
+
   guardarDependencia(): void {
-    const nuevaDependencia = {
-      nombre: this.idDependencia,
-      departamento: this.departamento,
-      municipio: this.municipio,
-      direccion: this.direccion,
+    const rol = localStorage.getItem('rol');
+
+    // Función para manejar el acceso denegado
+    const accesoDenegado = () => {
+      alert('⛔ No tienes permiso para acceder a esta sección.');
+
     };
+    switch (rol) {
+      case 'Operador':
+        return accesoDenegado();
+      case 'tecnico-administrador':
+        return accesoDenegado();
+      case 'SuperUsuario':
+        const nuevaDependencia = {
+          nombre: this.idDependencia,
+          departamento: this.departamento,
+          municipio: this.municipio,
+          direccion: this.direccion,
+        };
 
-    console.log('📤 Enviando dependencia:', nuevaDependencia);
+        console.log('📤 Enviando dependencia:', nuevaDependencia);
 
-    this.depService.guardarDependencia(nuevaDependencia).subscribe({
-      next: () => alert('✅ Dependencia guardada correctamente'),
-      error: (err) => {
-        console.error('❌ Error al guardar dependencia', err);
-        alert('❌ Error al guardar dependencia');
-      },
-    });
+        this.depService.guardarDependencia(nuevaDependencia).subscribe({
+          next: () => alert('✅ Dependencia guardada correctamente'),
+          error: (err) => {
+            console.error('❌ Error al guardar dependencia', err);
+            alert('❌ Error al guardar dependencia');
+          },
+        });
+      break;
+    }
+
   }
 
   buscarDependencias(): void {
